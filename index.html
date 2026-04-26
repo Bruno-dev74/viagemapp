@@ -24,15 +24,10 @@
 body{background:var(--cream);color:var(--text);font-family:'DM Sans',sans-serif;min-height:100vh;overflow-x:hidden;}
 .app{max-width:430px;margin:0 auto;padding-bottom:90px;background:var(--cream);position:relative;}
 
-/* ===== HERO SLIDESHOW ===== */
-.hero{position:relative;height:300px;overflow:hidden;background:linear-gradient(135deg,#c4a090 0%,#b8c4bf 40%,#8b9e8a 100%);}
-.hero-slide{position:absolute;inset:0;background-size:cover;background-position:center;opacity:0;transition:opacity 1.2s ease;}
-.hero-slide.active{opacity:1;}
-.hero-slide::after{content:'';position:absolute;inset:0;background:linear-gradient(to bottom,rgba(0,0,0,0.1) 0%,rgba(50,25,20,0.72) 100%);}
-.hero-dots{position:absolute;bottom:10px;left:50%;transform:translateX(-50%);display:flex;gap:5px;z-index:5;}
-.hero-dot{width:5px;height:5px;border-radius:50%;background:rgba(255,255,255,0.4);cursor:pointer;transition:all 0.3s;}
-.hero-dot.active{background:white;width:16px;border-radius:3px;}
-.hero-content{position:relative;z-index:2;padding:40px 22px 18px;height:100%;display:flex;flex-direction:column;justify-content:flex-end;}
+/* ===== HERO STATIC ===== */
+.hero{position:relative;height:260px;overflow:hidden;background:linear-gradient(160deg,#7d8f76 0%,#c4a090 45%,#8b6f6a 100%);}
+.hero::after{content:'';position:absolute;inset:0;background:linear-gradient(to bottom,rgba(0,0,0,0.08) 0%,rgba(50,25,20,0.65) 100%);}
+.hero-content{position:relative;z-index:2;padding:40px 22px 22px;height:100%;display:flex;flex-direction:column;justify-content:flex-end;}
 .hero-tag{display:inline-flex;align-items:center;gap:6px;background:rgba(255,255,255,0.22);backdrop-filter:blur(10px);padding:5px 13px;border-radius:20px;font-size:11px;color:white;letter-spacing:1px;margin-bottom:10px;width:fit-content;}
 .hero-title{font-family:'Cormorant Garamond',serif;font-size:50px;font-weight:300;color:white;line-height:1;letter-spacing:1px;}
 .hero-title em{font-style:italic;font-weight:400;}
@@ -364,13 +359,8 @@ textarea.note-input:focus{border-color:var(--rose);}
 <body>
 <div class="app">
 
-<!-- HERO SLIDESHOW -->
+<!-- HERO -->
 <div class="hero" id="heroEl">
-  <div class="hero-slide active" id="slide0"></div>
-  <div class="hero-slide" id="slide1"></div>
-  <div class="hero-slide" id="slide2"></div>
-  <div class="hero-slide" id="slide3"></div>
-  <div class="hero-dots" id="heroDots"></div>
   <div class="hero-content">
     <div class="hero-tag">🌲 Serra Gaúcha · RS</div>
     <div class="hero-title"><em>Gramado</em></div>
@@ -611,36 +601,7 @@ let currentBudgetDay = 'all';
 let discoverFilter = 'todos';
 let weatherText = '❄ ~10°C';
 let currentMalaTab = 0;
-let heroSlideIdx = 0;
-let heroInterval = null;
-let layoutMode = 'kanban'; // 'kanban' | 'list'
-
-// ===== HERO PHOTOS =====
-const HERO_PHOTOS = [
-  { url:'https://images.unsplash.com/photo-1692809162716-3f6a3f2a1023?w=900&q=80', label:'Vista da Serra Gaúcha' },
-  { url:'https://images.unsplash.com/photo-1544535830-9df3f56fff6a?w=900&q=80', label:'Névoa da manhã na serra' },
-  { url:'https://images.unsplash.com/photo-1509316785289-025f5b846b35?w=900&q=80', label:'Flores e jardins europeus' },
-  { url:'https://images.unsplash.com/photo-1476514525535-07fb3b4ae5f1?w=900&q=80', label:'Aventura na natureza' },
-];
-
-function initHeroSlideshow() {
-  const dotsEl = document.getElementById('heroDots');
-  dotsEl.innerHTML = '';
-  HERO_PHOTOS.forEach((ph, i) => {
-    document.getElementById('slide' + i).style.backgroundImage = `url('${ph.url}')`;
-    const dot = document.createElement('div');
-    dot.className = 'hero-dot' + (i === 0 ? ' active' : '');
-    dot.onclick = () => setHeroSlide(i);
-    dotsEl.appendChild(dot);
-  });
-  heroInterval = setInterval(() => setHeroSlide((heroSlideIdx + 1) % HERO_PHOTOS.length), 5000);
-}
-
-function setHeroSlide(idx) {
-  heroSlideIdx = idx;
-  document.querySelectorAll('.hero-slide').forEach((s, i) => s.classList.toggle('active', i === idx));
-  document.querySelectorAll('.hero-dot').forEach((d, i) => d.classList.toggle('active', i === idx));
-}
+let layoutMode = 'kanban';
 
 // ===== DISCOVER DATA (expanded) =====
 const discoverItems = [
@@ -1385,7 +1346,6 @@ function loadState() {
 
 // ===== INIT =====
 function init() {
-  initHeroSlideshow();
   const loaded = loadState();
   if (loaded && days.length > 0) {
     renderDays();
