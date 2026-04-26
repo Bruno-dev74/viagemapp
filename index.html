@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-<title>Gramado ✦ Viagem</title>
+<title>Gramado ✦</title>
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=DM+Sans:wght@300;400;500&family=Playfair+Display:ital,wght@1,400;1,600&display=swap" rel="stylesheet">
 <style>
 :root {
@@ -445,7 +445,9 @@ body.dark .config-btn-import{background:#342540;border-color:#4a3050;color:var(-
 .config-info{font-size:11px;color:var(--taupe);line-height:1.6;margin-top:8px;}
 .config-info strong{color:var(--bark);}
 </style>
+<!-- ═══ XLSX SCRIPT — DESATIVADO (descomentar para reativar) ═══
 <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
+═══════════════════════════════════════════════════════════════════════════════ -->
 </head>
 <body>
 <div class="app">
@@ -603,7 +605,9 @@ body.dark .config-btn-import{background:#342540;border-color:#4a3050;color:var(-
       </div>
     </div>
 
-    <!-- Export / Import -->
+
+<!-- ═══ EXPORT/IMPORT HTML — DESATIVADO (descomentar para reativar) ═══
+    [[ Export / Import ]]
     <div class="config-card">
       <div class="config-card-title">📋 Backup do Itinerário</div>
       <p class="config-info">Exporte todos os dados da sua viagem para um arquivo Excel (.xlsx). Use o mesmo arquivo para importar e restaurar seu roteiro em qualquer dispositivo.</p>
@@ -615,6 +619,7 @@ body.dark .config-btn-import{background:#342540;border-color:#4a3050;color:var(-
       <input type="file" id="importFileInput" accept=".xlsx" style="display:none" onchange="importXLSX(this)">
       <p class="config-info" style="margin-top:10px">⚠️ A importação <strong>substitui</strong> o itinerário atual. Exporte antes se quiser manter o conteúdo.</p>
     </div>
+═══════════════════════════════════════════════════════════════════════════════ -->
   </div>
   <div style="height:20px"></div>
 </div>
@@ -1592,6 +1597,7 @@ function applyTripMeta() {
   if (li) li.value = tripLocation;
 }
 
+/* ═══ EXPORT XLSX — DESATIVADO (descomentar para reativar) ═══
 // ===== EXPORT XLSX =====
 function exportXLSX() {
   try {
@@ -1652,6 +1658,9 @@ function exportXLSX() {
   }
 }
 
+═══════════════════════════════════════════════════════════════════════════════ */
+
+/* ═══ IMPORT XLSX — DESATIVADO (descomentar para reativar) ═══
 // ===== IMPORT XLSX =====
 function importXLSX(input) {
   const file = input.files[0];
@@ -1761,6 +1770,8 @@ function importXLSX(input) {
   reader.onerror = function() { showToast('Erro ao ler o arquivo.'); };
   reader.readAsArrayBuffer(file);
 }
+
+═══════════════════════════════════════════════════════════════════════════════ */
 
 // ===== DARK MODE =====
 let darkMode = false;
