@@ -1,0 +1,1403 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>Gramado ✦ Viagem</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=DM+Sans:wght@300;400;500&family=Playfair+Display:ital,wght@1,400;1,600&display=swap" rel="stylesheet">
+<style>
+:root {
+  --blush: #f5e6e0;
+  --rose: #d4847a;
+  --dusty: #c4a090;
+  --taupe: #8b6f6a;
+  --cream: #faf7f5;
+  --warm: #f0ebe5;
+  --bark: #5c3d35;
+  --sage: #7d8f76;
+  --gold: #c9a96e;
+  --mist: #b8c4bf;
+  --text: #3d2e2b;
+  --white: #ffffff;
+}
+*{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent;}
+body{background:var(--cream);color:var(--text);font-family:'DM Sans',sans-serif;min-height:100vh;overflow-x:hidden;}
+.app{max-width:430px;margin:0 auto;padding-bottom:90px;background:var(--cream);position:relative;}
+
+/* ===== HERO SLIDESHOW ===== */
+.hero{position:relative;height:300px;overflow:hidden;background:linear-gradient(135deg,#c4a090 0%,#b8c4bf 40%,#8b9e8a 100%);}
+.hero-slide{position:absolute;inset:0;background-size:cover;background-position:center;opacity:0;transition:opacity 1.2s ease;}
+.hero-slide.active{opacity:1;}
+.hero-slide::after{content:'';position:absolute;inset:0;background:linear-gradient(to bottom,rgba(0,0,0,0.1) 0%,rgba(50,25,20,0.72) 100%);}
+.hero-dots{position:absolute;bottom:10px;left:50%;transform:translateX(-50%);display:flex;gap:5px;z-index:5;}
+.hero-dot{width:5px;height:5px;border-radius:50%;background:rgba(255,255,255,0.4);cursor:pointer;transition:all 0.3s;}
+.hero-dot.active{background:white;width:16px;border-radius:3px;}
+.hero-content{position:relative;z-index:2;padding:40px 22px 18px;height:100%;display:flex;flex-direction:column;justify-content:flex-end;}
+.hero-tag{display:inline-flex;align-items:center;gap:6px;background:rgba(255,255,255,0.22);backdrop-filter:blur(10px);padding:5px 13px;border-radius:20px;font-size:11px;color:white;letter-spacing:1px;margin-bottom:10px;width:fit-content;}
+.hero-title{font-family:'Cormorant Garamond',serif;font-size:50px;font-weight:300;color:white;line-height:1;letter-spacing:1px;}
+.hero-title em{font-style:italic;font-weight:400;}
+.hero-dates{display:flex;gap:8px;margin-top:12px;align-items:center;flex-wrap:wrap;}
+.hero-date-chip{background:rgba(255,255,255,0.16);backdrop-filter:blur(8px);border:1px solid rgba(255,255,255,0.26);padding:7px 11px;border-radius:10px;font-size:12px;color:white;cursor:pointer;transition:background 0.2s;}
+.hero-date-chip:hover{background:rgba(255,255,255,0.28);}
+.hero-date-chip .lbl{font-size:9px;opacity:0.75;letter-spacing:1px;text-transform:uppercase;display:block;margin-bottom:1px;}
+.hero-date-chip input[type=date]{background:transparent;border:none;color:white;font-family:'DM Sans',sans-serif;font-size:12px;cursor:pointer;outline:none;width:90px;}
+.hero-date-chip input[type=date]::-webkit-calendar-picker-indicator{filter:invert(1);opacity:0.7;cursor:pointer;}
+.weather-chip{background:rgba(255,255,255,0.16);backdrop-filter:blur(8px);border:1px solid rgba(255,255,255,0.26);padding:7px 11px;border-radius:10px;font-size:12px;color:white;cursor:pointer;transition:background 0.2s;display:flex;align-items:center;gap:5px;}
+.weather-chip:hover{background:rgba(255,255,255,0.28);}
+.weather-chip .lbl{font-size:9px;opacity:0.75;letter-spacing:1px;text-transform:uppercase;display:block;margin-bottom:1px;}
+.weather-edit-input{background:transparent;border:none;border-bottom:1px solid rgba(255,255,255,0.5);color:white;font-family:'DM Sans',sans-serif;font-size:12px;outline:none;width:70px;}
+
+/* ===== PILLS NAV ===== */
+.pills-nav{display:flex;gap:8px;padding:16px 18px 4px;overflow-x:auto;scrollbar-width:none;}
+.pills-nav::-webkit-scrollbar{display:none;}
+.pill{flex-shrink:0;padding:7px 15px;border-radius:20px;font-size:13px;cursor:pointer;transition:all 0.25s;border:1.5px solid var(--blush);background:transparent;color:var(--taupe);font-family:'DM Sans',sans-serif;}
+.pill.active{background:var(--bark);color:white;border-color:var(--bark);}
+
+/* ===== TAB ===== */
+.tab-content{display:none;}
+.tab-content.active{display:block;}
+
+/* ===== SECTION HEADER ===== */
+.sec-head{padding:16px 22px 10px;display:flex;justify-content:space-between;align-items:center;}
+.sec-title{font-family:'Cormorant Garamond',serif;font-size:26px;font-weight:400;color:var(--bark);}
+.sec-title em{font-style:italic;}
+.sec-link{font-size:12px;color:var(--rose);cursor:pointer;}
+
+/* ===== STORY CIRCLES ===== */
+.story-row{display:flex;gap:14px;padding:0 18px 4px;overflow-x:auto;scrollbar-width:none;}
+.story-row::-webkit-scrollbar{display:none;}
+.story-item{display:flex;flex-direction:column;align-items:center;gap:5px;cursor:pointer;flex-shrink:0;}
+.story-ring{width:62px;height:62px;border-radius:50%;padding:2.5px;background:linear-gradient(135deg,var(--rose),var(--gold),var(--mist));transition:all 0.3s;}
+.story-ring.seen{background:#e0d8d5;}
+.story-inner{width:100%;height:100%;border-radius:50%;background:var(--warm);border:2.5px solid var(--cream);display:flex;flex-direction:column;align-items:center;justify-content:center;font-size:10px;color:var(--bark);font-weight:500;}
+.story-inner .day-n{font-family:'Cormorant Garamond',serif;font-size:18px;font-weight:600;line-height:1;color:var(--bark);}
+.story-label-wrap{display:flex;align-items:center;gap:3px;max-width:68px;}
+.story-label{font-size:10px;color:var(--taupe);letter-spacing:0.5px;max-width:60px;text-align:center;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;cursor:text;}
+.story-label-btn{font-size:9px;color:var(--mist);background:none;border:none;cursor:pointer;padding:0;opacity:0;transition:opacity 0.2s;line-height:1;}
+.story-item:hover .story-label-btn{opacity:1;}
+.story-label-edit{font-size:10px;border:none;border-bottom:1px solid var(--rose);background:transparent;color:var(--bark);width:62px;text-align:center;outline:none;font-family:'DM Sans',sans-serif;}
+
+/* ===== PROGRESS ===== */
+.progress-strip{margin:12px 20px 12px;display:flex;align-items:center;gap:10px;}
+.prog-bar{flex:1;height:4px;background:var(--blush);border-radius:2px;overflow:hidden;}
+.prog-fill{height:100%;background:linear-gradient(90deg,var(--rose),var(--gold));border-radius:2px;width:0%;transition:width 0.5s;}
+.prog-txt{font-size:11px;color:var(--taupe);white-space:nowrap;}
+
+/* ===== DAY PANEL ===== */
+.day-panel{display:none;}
+.day-panel.active{display:block;}
+.kanban-header{display:flex;align-items:center;justify-content:space-between;padding:8px 20px 10px;}
+.kanban-date-label{font-size:11px;color:var(--taupe);letter-spacing:1px;text-transform:uppercase;}
+.kanban-header-right{display:flex;align-items:center;gap:8px;}
+.kanban-count{font-size:11px;color:var(--mist);}
+
+/* layout toggle */
+.layout-toggle{display:flex;background:var(--warm);border-radius:10px;padding:3px;gap:2px;border:none;}
+.layout-btn{background:transparent;border:none;cursor:pointer;padding:5px 8px;border-radius:8px;font-size:13px;transition:all 0.2s;line-height:1;}
+.layout-btn.active{background:white;box-shadow:0 1px 4px rgba(93,61,53,0.12);}
+
+/* ===== KANBAN (horizontal scroll) ===== */
+.kanban-scroll{
+  display:flex;
+  gap:12px;
+  padding:0 20px 18px;
+  overflow-x:auto;
+  overflow-y:visible;
+  scrollbar-width:none;
+  align-items:flex-start;
+  scroll-snap-type:x mandatory;
+  -webkit-overflow-scrolling:touch;
+  cursor:grab;
+}
+.kanban-scroll:active{cursor:grabbing;}
+.kanban-scroll::-webkit-scrollbar{display:none;}
+/* fade hint at edge */
+.kanban-wrap{position:relative;}
+.kanban-wrap::after{
+  content:'';
+  position:absolute;
+  right:0;top:0;bottom:18px;
+  width:40px;
+  background:linear-gradient(to right,transparent,var(--cream));
+  pointer-events:none;
+  border-radius:0 0 0 0;
+}
+
+/* ===== ACTIVITY CARD — Kanban ===== */
+.act-card{
+  background:white;
+  border-radius:18px;
+  width:calc(55vw);
+  max-width:200px;
+  min-width:160px;
+  padding:0;
+  box-shadow:0 4px 18px rgba(93,61,53,0.09);
+  transition:box-shadow 0.2s,transform 0.15s;
+  position:relative;
+  overflow:hidden;
+  cursor:pointer;
+  flex-shrink:0;
+  scroll-snap-align:start;
+  scroll-snap-stop:always;
+}
+.act-card:active{transform:scale(0.97);box-shadow:0 2px 8px rgba(93,61,53,0.07);}
+.act-card-top{
+  height:76px;
+  background:linear-gradient(135deg,var(--warm),var(--blush));
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  font-size:32px;
+  position:relative;
+  user-select:none;
+}
+.act-card-top::after{content:'';position:absolute;inset:0;background:rgba(0,0,0,0.03);}
+.act-cat-strip{position:absolute;bottom:0;left:0;right:0;height:3px;}
+.cat-gastronomia .act-cat-strip{background:var(--rose);}
+.cat-natureza .act-cat-strip{background:var(--sage);}
+.cat-compras .act-cat-strip{background:var(--gold);}
+.cat-hotel .act-cat-strip{background:var(--mist);}
+.cat-aventura .act-cat-strip{background:#e07040;}
+.cat-cultura .act-cat-strip{background:#7a6cad;}
+.cat-noturno .act-cat-strip{background:#4a3a7a;}
+.act-card-body{padding:10px 12px 11px;}
+.act-time-badge{
+  display:inline-flex;align-items:center;gap:4px;
+  background:var(--bark);color:white;
+  font-size:10px;padding:3px 7px;border-radius:7px;
+  margin-bottom:6px;font-weight:500;letter-spacing:0.3px;
+}
+.act-time-badge.empty{background:var(--warm);color:var(--taupe);}
+.act-name{font-family:'Cormorant Garamond',serif;font-size:15px;font-weight:600;color:var(--bark);line-height:1.2;margin-bottom:3px;}
+.act-cat-label{font-size:10px;color:var(--taupe);letter-spacing:0.8px;text-transform:uppercase;margin-bottom:4px;}
+.act-desc-sm{font-size:10px;color:var(--dusty);line-height:1.5;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;}
+.act-footer{display:flex;align-items:center;justify-content:space-between;margin-top:7px;padding-top:7px;border-top:1px solid var(--blush);}
+.act-price-sm{font-family:'Cormorant Garamond',serif;font-size:14px;font-weight:600;color:var(--sage);}
+.act-price-free{font-size:10px;color:var(--mist);}
+.act-check-sm{width:24px;height:24px;border-radius:50%;border:1.5px solid var(--blush);display:flex;align-items:center;justify-content:center;font-size:10px;color:transparent;transition:all 0.2s;flex-shrink:0;}
+.act-card.done{opacity:0.5;}
+.act-card.done .act-check-sm{background:var(--rose);border-color:var(--rose);color:white;}
+.act-card.done .act-name{text-decoration:line-through;}
+.act-actions{display:flex;gap:5px;margin-top:6px;}
+.act-btn{flex:1;padding:5px 4px;border:none;border-radius:8px;font-size:10px;cursor:pointer;font-family:'DM Sans',sans-serif;transition:all 0.2s;}
+.act-btn-edit{background:var(--warm);color:var(--taupe);}
+.act-btn-edit:active{background:var(--blush);color:var(--bark);}
+.act-btn-del{background:#fff5f4;color:#c4847a;}
+.act-btn-del:active{background:#fde8e6;color:var(--rose);}
+
+/* ADD CARD btn */
+.add-act-card{
+  background:transparent;
+  border:2px dashed var(--blush);
+  border-radius:18px;
+  width:120px;min-width:120px;
+  height:76px;
+  display:flex;flex-direction:column;align-items:center;justify-content:center;
+  gap:6px;cursor:pointer;transition:all 0.2s;
+  color:var(--dusty);font-size:12px;flex-shrink:0;
+  scroll-snap-align:start;
+  align-self:flex-start;
+  margin-top:0;
+}
+.add-act-card:active{border-color:var(--rose);color:var(--rose);background:#fdf8f7;}
+.add-act-card span{font-size:20px;}
+
+/* ===== LIST VIEW (vertical, old style) ===== */
+.list-scroll{display:flex;flex-direction:column;gap:10px;padding:0 20px 16px;}
+.list-scroll .act-card{
+  width:100%;max-width:100%;min-width:0;
+  display:flex;flex-direction:row;gap:0;
+  border-radius:16px;
+  scroll-snap-align:unset;
+}
+.list-scroll .act-card-top{
+  width:60px;min-width:60px;height:auto;
+  border-radius:16px 0 0 16px;
+  font-size:26px;
+}
+.list-scroll .act-cat-strip{
+  width:3px;height:auto;
+  top:0;left:auto;right:0;bottom:0;
+  border-radius:0 16px 16px 0;
+}
+.list-scroll .act-card-body{flex:1;padding:10px 12px;}
+.list-scroll .add-act-card{
+  width:100%;min-width:0;height:52px;
+  flex-direction:row;gap:8px;
+  border-radius:14px;
+}
+
+/* Empty day */
+.empty-day{text-align:center;padding:30px 20px;color:var(--dusty);}
+.empty-day .empty-icon{font-size:32px;margin-bottom:8px;}
+.empty-day p{font-size:12px;line-height:1.6;}
+
+/* ===== ADD/EDIT MODAL ===== */
+.modal-overlay{display:none;position:fixed;inset:0;background:rgba(60,30,25,0.45);z-index:200;align-items:flex-end;justify-content:center;}
+.modal-overlay.open{display:flex;}
+.modal-sheet{background:var(--cream);border-radius:24px 24px 0 0;width:100%;max-width:430px;padding:18px 20px 40px;animation:slideUp 0.3s ease;max-height:92vh;overflow-y:auto;}
+@keyframes slideUp{from{transform:translateY(100%);opacity:0;}to{transform:translateY(0);opacity:1;}}
+.modal-handle{width:36px;height:4px;background:var(--blush);border-radius:2px;margin:0 auto 14px;}
+.modal-title{font-family:'Cormorant Garamond',serif;font-size:22px;color:var(--bark);margin-bottom:14px;}
+.modal-title em{font-style:italic;}
+.form-row{display:flex;gap:10px;margin-bottom:11px;}
+.form-group{display:flex;flex-direction:column;gap:5px;flex:1;}
+.form-label{font-size:10px;color:var(--taupe);letter-spacing:1px;text-transform:uppercase;}
+.form-input,.form-select,.form-textarea{background:white;border:1.5px solid var(--blush);border-radius:10px;color:var(--text);font-family:'DM Sans',sans-serif;font-size:13px;padding:10px 12px;outline:none;transition:border-color 0.2s;width:100%;}
+.form-input:focus,.form-select:focus,.form-textarea:focus{border-color:var(--rose);}
+.form-textarea{resize:none;height:58px;}
+.emoji-picker-row{display:flex;gap:8px;flex-wrap:wrap;margin-top:5px;}
+.emoji-opt{font-size:22px;cursor:pointer;padding:4px;border-radius:8px;transition:background 0.15s;line-height:1;}
+.emoji-opt:hover,.emoji-opt.sel{background:var(--blush);}
+.emoji-custom-input{background:white;border:1.5px solid var(--blush);border-radius:10px;font-size:18px;padding:8px 10px;outline:none;width:58px;text-align:center;}
+.btn-primary{background:var(--bark);color:white;border:none;border-radius:12px;padding:13px;font-family:'DM Sans',sans-serif;font-size:13px;cursor:pointer;width:100%;letter-spacing:0.5px;transition:all 0.2s;margin-top:6px;}
+.btn-primary:hover{background:var(--rose);}
+.btn-secondary{background:transparent;color:var(--taupe);border:1.5px solid var(--blush);border-radius:12px;padding:12px;font-family:'DM Sans',sans-serif;font-size:13px;cursor:pointer;width:100%;margin-top:8px;}
+.cat-manual-wrap{display:none;}
+.cat-manual-wrap.show{display:block;margin-top:6px;}
+
+/* ===== DISCOVER ===== */
+.discover-search{margin:0 20px 12px;position:relative;}
+.discover-search input{width:100%;background:white;border:1.5px solid var(--blush);border-radius:12px;padding:10px 14px 10px 36px;font-family:'DM Sans',sans-serif;font-size:13px;color:var(--text);outline:none;transition:border-color 0.2s;}
+.discover-search input:focus{border-color:var(--rose);}
+.discover-search .search-icon{position:absolute;left:12px;top:50%;transform:translateY(-50%);font-size:14px;pointer-events:none;}
+.discover-filters{display:flex;gap:8px;padding:0 20px 12px;overflow-x:auto;scrollbar-width:none;}
+.discover-filters::-webkit-scrollbar{display:none;}
+.filter-chip{flex-shrink:0;padding:6px 14px;border-radius:16px;font-size:12px;cursor:pointer;border:1.5px solid var(--blush);background:transparent;color:var(--taupe);font-family:'DM Sans',sans-serif;transition:all 0.2s;}
+.filter-chip.active{background:var(--sage);color:white;border-color:var(--sage);}
+
+/* Discover cards grid */
+.discover-grid{display:grid;grid-template-columns:1fr 1fr;gap:11px;padding:0 18px;}
+.discover-card{background:white;border-radius:16px;overflow:hidden;box-shadow:0 3px 14px rgba(93,61,53,0.07);cursor:pointer;transition:transform 0.2s;}
+.discover-card:active{transform:scale(0.97);}
+.discover-card-img{width:100%;height:90px;display:flex;align-items:center;justify-content:center;font-size:36px;background:linear-gradient(135deg,var(--blush),var(--mist));}
+.discover-card-body{padding:10px 11px 11px;}
+.discover-card-name{font-family:'Cormorant Garamond',serif;font-size:14px;font-weight:600;color:var(--bark);line-height:1.2;margin-bottom:3px;}
+.discover-card-price{font-size:11px;color:var(--sage);font-weight:500;margin-bottom:5px;}
+.discover-card-desc{font-size:10px;color:var(--taupe);line-height:1.5;margin-bottom:7px;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;}
+.discover-card-tags{display:flex;gap:4px;flex-wrap:wrap;margin-bottom:8px;}
+.tag{background:var(--warm);color:var(--taupe);font-size:10px;padding:2px 7px;border-radius:8px;}
+.tag.price{background:#f0f7ee;color:var(--sage);}
+.discover-add-btn{background:var(--bark);color:white;border:none;border-radius:9px;padding:7px 10px;font-size:11px;cursor:pointer;font-family:'DM Sans',sans-serif;transition:all 0.2s;width:100%;}
+.discover-add-btn:hover{background:var(--rose);}
+.discover-add-btn.added{background:var(--sage);}
+
+/* Discover detail modal */
+.discover-detail-content{padding:10px 0;}
+.discover-detail-emoji{font-size:60px;text-align:center;margin-bottom:10px;}
+.discover-detail-name{font-family:'Cormorant Garamond',serif;font-size:24px;color:var(--bark);margin-bottom:4px;}
+.discover-detail-desc{font-size:13px;color:var(--taupe);line-height:1.7;margin-bottom:12px;}
+.discover-detail-info{display:flex;gap:10px;margin-bottom:14px;flex-wrap:wrap;}
+.discover-detail-badge{background:var(--warm);border-radius:10px;padding:6px 12px;font-size:12px;color:var(--bark);}
+
+/* ===== ORÇAMENTO ===== */
+.budget-overview{margin:0 20px 16px;background:linear-gradient(135deg,var(--bark) 0%,#7a4f46 100%);border-radius:20px;padding:22px;color:white;position:relative;overflow:hidden;}
+.budget-overview::before{content:'';position:absolute;width:180px;height:180px;border-radius:50%;background:rgba(255,255,255,0.05);top:-50px;right:-30px;}
+.bgt-label{font-size:11px;letter-spacing:2px;text-transform:uppercase;opacity:0.7;margin-bottom:4px;}
+.bgt-total{font-family:'Cormorant Garamond',serif;font-size:40px;font-weight:300;line-height:1;}
+.bgt-subtitle{font-size:11px;opacity:0.6;margin-bottom:14px;}
+.budget-days-tabs{display:flex;gap:6px;padding:0 20px 12px;overflow-x:auto;scrollbar-width:none;}
+.budget-days-tabs::-webkit-scrollbar{display:none;}
+.bgt-day-tab{flex-shrink:0;padding:6px 14px;border-radius:14px;font-size:12px;cursor:pointer;border:1.5px solid var(--blush);background:transparent;color:var(--taupe);font-family:'DM Sans',sans-serif;transition:all 0.2s;}
+.bgt-day-tab.active{background:var(--bark);color:white;border-color:var(--bark);}
+.budget-items-list{padding:0 20px;display:flex;flex-direction:column;gap:8px;}
+.bgt-item{background:white;border-radius:14px;padding:12px 14px;display:flex;justify-content:space-between;align-items:center;box-shadow:0 1px 8px rgba(93,61,53,0.05);}
+.bgt-item-left{display:flex;align-items:center;gap:10px;}
+.bgt-item-emoji{font-size:18px;}
+.bgt-item-name{font-size:13px;color:var(--bark);}
+.bgt-item-day{font-size:10px;color:var(--taupe);}
+.bgt-item-val{font-family:'Cormorant Garamond',serif;font-size:18px;font-weight:600;color:var(--sage);}
+.bgt-empty{text-align:center;padding:30px;color:var(--dusty);font-size:13px;}
+.bgt-day-total{margin:12px 20px 0;padding:12px 14px;background:var(--warm);border-radius:12px;display:flex;justify-content:space-between;font-size:13px;color:var(--bark);font-weight:500;}
+
+/* ===== MALA — versão completa ===== */
+.mala-menu{display:flex;gap:6px;padding:0 20px 14px;overflow-x:auto;scrollbar-width:none;}
+.mala-menu::-webkit-scrollbar{display:none;}
+.mala-tab-btn{flex-shrink:0;padding:6px 14px;border-radius:14px;font-size:12px;cursor:pointer;border:1.5px solid var(--blush);background:transparent;color:var(--taupe);font-family:'DM Sans',sans-serif;transition:all 0.2s;}
+.mala-tab-btn.active{background:var(--rose);color:white;border-color:var(--rose);}
+.mala-section{display:none;}
+.mala-section.active{display:block;}
+.mala-must-section{padding:0 20px;}
+.mala-must-title{font-family:'Cormorant Garamond',serif;font-size:17px;color:var(--bark);margin-bottom:10px;}
+.quote-block{margin:8px 20px 16px;background:var(--warm);border-radius:14px;padding:16px 18px;border-left:3px solid var(--rose);}
+.quote-text{font-family:'Playfair Display',serif;font-style:italic;font-size:14px;color:var(--bark);line-height:1.6;}
+.quote-author{font-size:10px;color:var(--taupe);letter-spacing:1.5px;text-transform:uppercase;margin-top:7px;}
+.checklist-grid{padding:0 20px;display:grid;grid-template-columns:1fr 1fr;gap:10px;}
+.check-card{background:white;border-radius:14px;padding:13px;display:flex;align-items:center;gap:8px;box-shadow:0 2px 8px rgba(93,61,53,0.05);cursor:pointer;transition:all 0.2s;}
+.check-card.checked{background:var(--warm);opacity:0.7;}
+.check-circle-sm{width:26px;height:26px;border-radius:50%;border:1.5px solid var(--blush);flex-shrink:0;display:flex;align-items:center;justify-content:center;font-size:11px;transition:all 0.2s;color:transparent;}
+.check-card.checked .check-circle-sm{background:var(--rose);border-color:var(--rose);color:white;}
+.check-card.checked .check-text{text-decoration:line-through;color:var(--dusty);}
+.check-text{font-size:12px;color:var(--bark);line-height:1.3;}
+.mala-success{display:none;text-align:center;padding:28px 20px;background:linear-gradient(135deg,#f0f7ee,#e8f5e4);border-radius:20px;margin:0 20px;}
+.mala-success.show{display:block;}
+.mala-success-icon{font-size:48px;margin-bottom:10px;}
+.mala-success-title{font-family:'Cormorant Garamond',serif;font-size:22px;color:var(--sage);margin-bottom:6px;}
+.mala-success-msg{font-size:12px;color:var(--taupe);line-height:1.6;margin-bottom:14px;}
+.mala-reset-btn{background:var(--sage);color:white;border:none;border-radius:10px;padding:9px 18px;font-size:12px;cursor:pointer;font-family:'DM Sans',sans-serif;}
+
+/* ===== NOTAS ===== */
+.notes-feed{padding:0 20px;display:flex;flex-direction:column;gap:12px;}
+.note-card{background:white;border-radius:16px;padding:16px;box-shadow:0 2px 10px rgba(93,61,53,0.05);}
+.note-header{display:flex;align-items:center;gap:8px;margin-bottom:8px;}
+.note-dot{width:8px;height:8px;border-radius:50%;background:var(--rose);}
+.note-type{font-size:10px;color:var(--taupe);letter-spacing:1.5px;text-transform:uppercase;}
+.note-body{font-size:13px;color:var(--text);line-height:1.7;}
+.note-date{font-size:10px;color:var(--mist);margin-top:8px;text-align:right;}
+textarea.note-input{width:100%;background:white;border:1.5px solid var(--blush);border-radius:12px;color:var(--text);font-family:'DM Sans',sans-serif;font-size:13px;padding:12px 14px;resize:none;height:78px;margin-bottom:8px;outline:none;transition:border-color 0.2s;}
+textarea.note-input:focus{border-color:var(--rose);}
+
+/* ===== BOTTOM NAV ===== */
+.bottom-nav{position:fixed;bottom:0;left:50%;transform:translateX(-50%);width:100%;max-width:430px;background:white;border-top:1px solid var(--blush);display:flex;padding:8px 0 16px;z-index:100;box-shadow:0 -8px 30px rgba(93,61,53,0.08);}
+.nav-item{flex:1;display:flex;flex-direction:column;align-items:center;gap:2px;background:none;border:none;cursor:pointer;padding:5px 0;}
+.nav-icon{font-size:19px;line-height:1;}
+.nav-label{font-size:10px;color:var(--mist);font-family:'DM Sans',sans-serif;letter-spacing:0.5px;}
+.nav-item.active .nav-label{color:var(--rose);}
+.nav-dot{width:4px;height:4px;border-radius:50%;background:var(--rose);opacity:0;margin-top:-1px;}
+.nav-item.active .nav-dot{opacity:1;}
+
+/* Toasts */
+.toast{position:fixed;bottom:100px;left:50%;transform:translateX(-50%) translateY(20px);background:var(--bark);color:white;padding:10px 20px;border-radius:20px;font-size:12px;opacity:0;transition:all 0.3s;z-index:999;pointer-events:none;}
+.toast.show{opacity:1;transform:translateX(-50%) translateY(0);}
+</style>
+</head>
+<body>
+<div class="app">
+
+<!-- HERO SLIDESHOW -->
+<div class="hero" id="heroEl">
+  <div class="hero-slide active" id="slide0"></div>
+  <div class="hero-slide" id="slide1"></div>
+  <div class="hero-slide" id="slide2"></div>
+  <div class="hero-slide" id="slide3"></div>
+  <div class="hero-dots" id="heroDots"></div>
+  <div class="hero-content">
+    <div class="hero-tag">🌲 Serra Gaúcha · RS</div>
+    <div class="hero-title"><em>Gramado</em></div>
+    <div class="hero-dates">
+      <div class="hero-date-chip">
+        <span class="lbl">Chegada</span>
+        <input type="date" id="dateStart" value="2026-06-05" onchange="onDatesChanged()">
+      </div>
+      <div class="hero-date-chip">
+        <span class="lbl">Saída</span>
+        <input type="date" id="dateEnd" value="2026-06-08" onchange="onDatesChanged()">
+      </div>
+      <div class="weather-chip" id="weatherChip" onclick="editWeather()">
+        <div>
+          <span class="lbl">Clima</span>
+          <span id="weatherText">❄ ~10°C</span>
+        </div>
+        <span style="font-size:10px;opacity:0.7;">✏️</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- PILLS NAV -->
+<div class="pills-nav">
+  <button class="pill active" onclick="switchTab('roteiro',this)">✨ Roteiro</button>
+  <button class="pill" onclick="switchTab('descobrir',this)">🔍 Descobrir</button>
+  <button class="pill" onclick="switchTab('mala',this)">👜 Mala</button>
+  <button class="pill" onclick="switchTab('orcamento',this)">💳 Orçamento</button>
+  <button class="pill" onclick="switchTab('notas',this)">📒 Notas</button>
+</div>
+
+<!-- ===== ROTEIRO ===== -->
+<div id="tab-roteiro" class="tab-content active">
+  <div class="sec-head">
+    <div class="sec-title"><em>Itinerário</em></div>
+    <span class="sec-link" onclick="openAddModal()">+ Adicionar</span>
+  </div>
+  <div class="story-row" id="storyRow"></div>
+  <div class="progress-strip">
+    <div class="prog-bar"><div class="prog-fill" id="progFill"></div></div>
+    <span class="prog-txt" id="progTxt">0 de 0 feitas</span>
+  </div>
+  <div id="dayPanelsContainer"></div>
+</div>
+
+<!-- ===== DESCOBRIR ===== -->
+<div id="tab-descobrir" class="tab-content">
+  <div class="sec-head">
+    <div class="sec-title"><em>Descobrir</em> Gramado</div>
+  </div>
+  <div class="discover-search">
+    <span class="search-icon">🔍</span>
+    <input type="text" id="discoverSearch" placeholder="Buscar atrações, restaurantes..." oninput="renderDiscover()">
+  </div>
+  <div class="discover-filters">
+    <button class="filter-chip active" onclick="filterDiscover('todos',this)">Todos</button>
+    <button class="filter-chip" onclick="filterDiscover('natureza',this)">🌿 Natureza</button>
+    <button class="filter-chip" onclick="filterDiscover('cultura',this)">🎭 Cultura</button>
+    <button class="filter-chip" onclick="filterDiscover('gastronomia',this)">🍽 Gastro</button>
+    <button class="filter-chip" onclick="filterDiscover('aventura',this)">⚡ Aventura</button>
+    <button class="filter-chip" onclick="filterDiscover('compras',this)">🛍 Compras</button>
+    <button class="filter-chip" onclick="filterDiscover('hotel',this)">🏨 Hotéis</button>
+    <button class="filter-chip" onclick="filterDiscover('noturno',this)">🌙 Noturno</button>
+  </div>
+  <div class="discover-grid" id="discoverList"></div>
+  <div style="height:16px"></div>
+</div>
+
+<!-- ===== MALA ===== -->
+<div id="tab-mala" class="tab-content">
+  <div class="sec-head"><div class="sec-title"><em>Minha</em> Mala</div></div>
+  <div class="quote-block">
+    <div class="quote-text">"Leve o casaco mais pesado que você tiver — Gramado em junho é friozinho de cobertor e chocolate quente"</div>
+    <div class="quote-author">✦ Dica da viagem</div>
+  </div>
+  <div class="mala-menu" id="malaMenu"></div>
+  <div id="malaSections"></div>
+  <div class="mala-success" id="malaSuccess">
+    <div class="mala-success-icon">🎉</div>
+    <div class="mala-success-title">Mala pronta!</div>
+    <div class="mala-success-msg">Tudo organizado. Agora é só aproveitar Gramado com muito estilo e calor humano 🌲</div>
+    <button class="mala-reset-btn" onclick="resetMala()">↺ Desmarcar tudo</button>
+  </div>
+  <div style="height:20px"></div>
+</div>
+
+<!-- ===== ORÇAMENTO ===== -->
+<div id="tab-orcamento" class="tab-content">
+  <div class="sec-head"><div class="sec-title"><em>Orçamento</em></div></div>
+  <div class="budget-overview">
+    <div class="bgt-label">Total das atividades</div>
+    <div class="bgt-total" id="bgtTotalAll">R$ 0</div>
+    <div class="bgt-subtitle">Somente passeios e atividades adicionados</div>
+  </div>
+  <div class="sec-head" style="padding-top:14px">
+    <div class="sec-title" style="font-size:18px">Por <em>dia</em></div>
+  </div>
+  <div class="budget-days-tabs" id="budgetDaysTabs"></div>
+  <div id="budgetDayPanels"></div>
+  <div style="height:20px"></div>
+</div>
+
+<!-- ===== NOTAS ===== -->
+<div id="tab-notas" class="tab-content">
+  <div class="sec-head"><div class="sec-title"><em>Notas</em> & Dicas</div></div>
+  <div class="notes-feed" style="margin-bottom:14px">
+    <textarea class="note-input" id="noteInput" placeholder="Anote sua dica, ideia ou lembrança..."></textarea>
+    <button class="btn-primary" onclick="saveNote()">Salvar nota ✨</button>
+  </div>
+  <div class="notes-feed" id="notesFeed">
+    <div class="note-card">
+      <div class="note-header"><div class="note-dot"></div><span class="note-type">Dica · Fondue</span></div>
+      <div class="note-body">Reservar o jantar de fondue com pelo menos 2 dias de antecedência — no inverno lota muito!</div>
+      <div class="note-date">dica salva ✓</div>
+    </div>
+    <div class="note-card">
+      <div class="note-header"><div class="note-dot" style="background:var(--sage)"></div><span class="note-type">Dica · Clima</span></div>
+      <div class="note-body">Junho varia de 5°C a 15°C. Pode nevar! Casaco pesado mesmo pro jantar — as noites são geladas 🌫️</div>
+      <div class="note-date">dica salva ✓</div>
+    </div>
+    <div class="note-card">
+      <div class="note-header"><div class="note-dot" style="background:var(--gold)"></div><span class="note-type">Dica · Transporte</span></div>
+      <div class="note-body">Centro é walkable — dá pra ir a pé em quase tudo! Para Parque do Caracol e Alpen Park usar 99 ou Gramado Taxi.</div>
+      <div class="note-date">dica salva ✓</div>
+    </div>
+  </div>
+  <div style="height:20px"></div>
+</div>
+
+</div><!-- end app -->
+
+<!-- ADD/EDIT MODAL -->
+<div class="modal-overlay" id="addModal" onclick="closeModalOnBg(event)">
+  <div class="modal-sheet">
+    <div class="modal-handle"></div>
+    <div class="modal-title" id="modalTitle"><em>Adicionar</em> Atividade</div>
+    <input type="hidden" id="editingIdx" value="">
+    <input type="hidden" id="editingDayIdx" value="">
+    <div class="form-group" style="margin-bottom:11px">
+      <div class="form-label">Dia</div>
+      <select class="form-select" id="formDay"></select>
+    </div>
+    <div class="form-row">
+      <div class="form-group" style="flex:2">
+        <div class="form-label">Nome da atividade</div>
+        <input class="form-input" id="formName" placeholder="ex: Passeio no centro">
+      </div>
+      <div class="form-group" style="flex:1">
+        <div class="form-label">Horário</div>
+        <input class="form-input" id="formTime" placeholder="10:00" type="time">
+      </div>
+    </div>
+    <div class="form-row">
+      <div class="form-group">
+        <div class="form-label">Categoria</div>
+        <select class="form-select" id="formCat" onchange="onCatChange(this)">
+          <option value="gastronomia">🍽 Gastronomia</option>
+          <option value="natureza">🌿 Natureza</option>
+          <option value="aventura">⚡ Aventura</option>
+          <option value="compras">🛍 Compras</option>
+          <option value="cultura">🎭 Cultura</option>
+          <option value="hotel">🏨 Hotel/Serviço</option>
+          <option value="outro">✏️ Digitar...</option>
+        </select>
+        <div class="cat-manual-wrap" id="catManualWrap">
+          <input class="form-input" id="formCatManual" placeholder="Ex: Spa, Vinícola...">
+        </div>
+      </div>
+      <div class="form-group">
+        <div class="form-label">Preço (R$)</div>
+        <input class="form-input" id="formPrice" placeholder="0" type="number" min="0">
+      </div>
+    </div>
+    <div class="form-group" style="margin-bottom:11px">
+      <div class="form-label">Emoji</div>
+      <div class="emoji-picker-row" id="emojiPickerRow"></div>
+      <input class="emoji-custom-input" id="formEmoji" placeholder="✏️" maxlength="2" oninput="syncEmojiSel(this.value)">
+    </div>
+    <div class="form-group" style="margin-bottom:14px">
+      <div class="form-label">Descrição (opcional)</div>
+      <textarea class="form-textarea" id="formDesc" placeholder="Uma breve descrição..."></textarea>
+    </div>
+    <button class="btn-primary" onclick="confirmActivity()" id="modalConfirmBtn">Adicionar ao Roteiro ✓</button>
+    <button class="btn-secondary" onclick="closeAddModal()">Cancelar</button>
+  </div>
+</div>
+
+<!-- DISCOVER DETAIL MODAL -->
+<div class="modal-overlay" id="discoverModal" onclick="closeDiscoverModal(event)">
+  <div class="modal-sheet">
+    <div class="modal-handle"></div>
+    <div id="discoverModalContent"></div>
+  </div>
+</div>
+
+<!-- WEATHER EDIT MODAL -->
+<div class="modal-overlay" id="weatherModal" onclick="closeWeatherModal(event)">
+  <div class="modal-sheet" style="max-height:50vh;">
+    <div class="modal-handle"></div>
+    <div class="modal-title"><em>Editar</em> Clima</div>
+    <div class="form-group" style="margin-bottom:14px">
+      <div class="form-label">Descrição do clima</div>
+      <input class="form-input" id="weatherInput" placeholder="ex: ❄ ~10°C">
+    </div>
+    <button class="btn-primary" onclick="saveWeather()">Salvar</button>
+    <button class="btn-secondary" onclick="closeWeatherModal()">Cancelar</button>
+  </div>
+</div>
+
+<!-- TOAST -->
+<div class="toast" id="toastEl"></div>
+
+<!-- BOTTOM NAV -->
+<nav class="bottom-nav">
+  <button class="nav-item active" id="bnav-roteiro" onclick="switchTab('roteiro',this)">
+    <span class="nav-icon">🗺️</span><span class="nav-label">Roteiro</span><div class="nav-dot"></div>
+  </button>
+  <button class="nav-item" id="bnav-descobrir" onclick="switchTab('descobrir',this)">
+    <span class="nav-icon">🔍</span><span class="nav-label">Descobrir</span><div class="nav-dot"></div>
+  </button>
+  <button class="nav-item" id="bnav-mala" onclick="switchTab('mala',this)">
+    <span class="nav-icon">👜</span><span class="nav-label">Mala</span><div class="nav-dot"></div>
+  </button>
+  <button class="nav-item" id="bnav-orcamento" onclick="switchTab('orcamento',this)">
+    <span class="nav-icon">💳</span><span class="nav-label">Orçamento</span><div class="nav-dot"></div>
+  </button>
+  <button class="nav-item" id="bnav-notas" onclick="switchTab('notas',this)">
+    <span class="nav-icon">📒</span><span class="nav-label">Notas</span><div class="nav-dot"></div>
+  </button>
+</nav>
+
+<script>
+// ===== STATE =====
+let currentDay = 0;
+let days = [];
+let currentBudgetDay = 'all';
+let discoverFilter = 'todos';
+let weatherText = '❄ ~10°C';
+let currentMalaTab = 0;
+let heroSlideIdx = 0;
+let heroInterval = null;
+let layoutMode = 'kanban'; // 'kanban' | 'list'
+
+// ===== HERO PHOTOS =====
+const HERO_PHOTOS = [
+  { url:'https://images.unsplash.com/photo-1692809162716-3f6a3f2a1023?w=900&q=80', label:'Vista da Serra Gaúcha' },
+  { url:'https://images.unsplash.com/photo-1544535830-9df3f56fff6a?w=900&q=80', label:'Névoa da manhã na serra' },
+  { url:'https://images.unsplash.com/photo-1509316785289-025f5b846b35?w=900&q=80', label:'Flores e jardins europeus' },
+  { url:'https://images.unsplash.com/photo-1476514525535-07fb3b4ae5f1?w=900&q=80', label:'Aventura na natureza' },
+];
+
+function initHeroSlideshow() {
+  const dotsEl = document.getElementById('heroDots');
+  dotsEl.innerHTML = '';
+  HERO_PHOTOS.forEach((ph, i) => {
+    document.getElementById('slide' + i).style.backgroundImage = `url('${ph.url}')`;
+    const dot = document.createElement('div');
+    dot.className = 'hero-dot' + (i === 0 ? ' active' : '');
+    dot.onclick = () => setHeroSlide(i);
+    dotsEl.appendChild(dot);
+  });
+  heroInterval = setInterval(() => setHeroSlide((heroSlideIdx + 1) % HERO_PHOTOS.length), 5000);
+}
+
+function setHeroSlide(idx) {
+  heroSlideIdx = idx;
+  document.querySelectorAll('.hero-slide').forEach((s, i) => s.classList.toggle('active', i === idx));
+  document.querySelectorAll('.hero-dot').forEach((d, i) => d.classList.toggle('active', i === idx));
+}
+
+// ===== DISCOVER DATA (expanded) =====
+const discoverItems = [
+  { id:'parque-caracol', name:'Parque do Caracol', cat:'natureza', emoji:'🌊', price:65, desc:'Cachoeira de 131m + teleférico com vista deslumbrante da serra', tags:['3h','Agasalho!','Cachoeira'] },
+  { id:'snowland', name:'Snowland', cat:'aventura', emoji:'❄️', price:220, desc:'Parque indoor de neve real — temperatura chega a -5°C. Patinação e esportes radicais', tags:['4h','Indoor','Neve real'] },
+  { id:'mini-mundo', name:'Mini Mundo', cat:'cultura', emoji:'🎠', price:70, desc:'Parque temático com miniaturas perfeitas de monumentos do mundo inteiro', tags:['2h','Família','Fotogênico'] },
+  { id:'alpen-park', name:'Alpen Park', cat:'aventura', emoji:'🎢', price:110, desc:'Tirolesa, montanha-russa alpina e atrações radicais na encosta da serra', tags:['3h','Aventura'] },
+  { id:'lago-negro', name:'Lago Negro', cat:'natureza', emoji:'🏞️', price:0, desc:'Pedalinho, fotos e pôr do sol cor-de-rosa. Um dos locais mais fotogênicos de Gramado', tags:['Gratuito','Fotogênico','Pôr do sol'] },
+  { id:'lumni', name:'Lumni Parque de Luzes', cat:'noturno', emoji:'✨', price:80, desc:'Parque noturno com mais de 500 mil LEDs. Jardins e túneis de luz imersivos', tags:['Noturno','Romântico','Novo!'] },
+  { id:'rua-coberta', name:'Rua Coberta', cat:'compras', emoji:'🛍️', price:0, desc:'Rua mais charmosa de Gramado — lojas, artesanato, cafés e chocolates artesanais', tags:['Gratuito','Centro','Compras'] },
+  { id:'fondue', name:'Fondue (Cantina Piero)', cat:'gastronomia', emoji:'🫕', price:120, desc:'Fondue de queijo e chocolate — experiência obrigatória no frio serrano. Reserve!', tags:['Reserve!','Romântico','Noturno'] },
+  { id:'cafe-colonial', name:'Café Colonial Le Manjue', cat:'gastronomia', emoji:'☕', price:80, desc:'Pães artesanais, embutidos, geleias e muito charme em ambiente aconchegante', tags:['Manhã','Colonial','★ 4.7'] },
+  { id:'acquamotion', name:'Acquamotion', cat:'aventura', emoji:'🌊', price:130, desc:'Parque aquático coberto com águas termais — funciona o ano todo mesmo no frio!', tags:['Thermal','Família','3h'] },
+  { id:'mundo-vapor', name:'Mundo a Vapor', cat:'cultura', emoji:'🚂', price:55, desc:'Museu extraordinário de ciências com miniaturas a vapor em funcionamento', tags:['Cultura','Educativo','1.5h'] },
+  { id:'rua-torta', name:'Rua Torta', cat:'natureza', emoji:'🌸', price:0, desc:'Inspirada na Lombard St de SF — sinuosa, florida e instagramável', tags:['Gratuito','Fotos','Centro'] },
+  { id:'lugano-prawer', name:'Lugano & Prawer', cat:'compras', emoji:'🍫', price:0, desc:'As melhores chocolaterias de Gramado — provar tudo e comprar presentes!', tags:['Gratuito','Chocolates','Presentes'] },
+  { id:'gramado-zoo', name:'GramadoZoo', cat:'natureza', emoji:'🦁', price:70, desc:'Zoo moderno focado em bem-estar animal, pesquisa e educação ambiental', tags:['Família','3h','Natureza'] },
+  { id:'skyglass', name:'Skyglass Canela', cat:'aventura', emoji:'🔭', price:90, desc:'Mirante de vidro sobre o abismo em Canela — vista de tirar o fôlego', tags:['Canela','Radical','Vistas'] },
+  { id:'olivas', name:'Olivas de Gramado', cat:'natureza', emoji:'🫒', price:50, desc:'Fazendinha, animais, trilhas e degustação de azeite com vista linda da serra', tags:['Família','Azeite','Animais'] },
+  { id:'dreamland', name:'Dreamland Museu de Cera', cat:'cultura', emoji:'🎭', price:60, desc:'Museu interativo e temático com figuras de cera de celebridades mundiais', tags:['Família','Diversão','2h'] },
+  { id:'chocofest', name:'Chocolaterie Artesanal', cat:'gastronomia', emoji:'🍫', price:30, desc:'Tour em fábrica artesanal com degustação e compra de chocolates exclusivos', tags:['Degustação','Presente','1h'] },
+  { id:'pousada-saint', name:'Pousada Saint Moritz', cat:'hotel', emoji:'🏡', price:0, desc:'Charmosa pousada inspirada nos Alpes Suíços com café da manhã incluso', tags:['5 estrelas','Café incluso','Centro'] },
+  { id:'hotel-ritta', name:'Hotel Ritta Höppner', cat:'hotel', emoji:'🏨', price:0, desc:'Hotel clássico de Gramado com decoração europeia e localização privilegiada', tags:['Clássico','Central','★ 4.5'] },
+  { id:'vinhedos', name:'Vale dos Vinhedos (Bento)', cat:'natureza', emoji:'🍷', price:0, desc:'A 40min, os melhores vinhos do Sul em meio a paisagens deslumbrantes', tags:['Excursão','Vinhos','Vale'] },
+  { id:'bar-antares', name:'Bar Antares', cat:'noturno', emoji:'🍸', price:0, desc:'Bar descolado com drinks autorais e vista privilegiada do centro de Gramado', tags:['Drinks','Noturno','Vista'] },
+];
+
+// ===== MALA DATA =====
+const malaCategories = [
+  {
+    id:'frio', label:'🧥 Frio', items:[
+      'Casaco de lã pesado','Cachecol & luvas','Gorro fofo','Meia térmica',
+      'Calça grossa','Fleece/suéter','Casaco impermeável','Camiseta térmica'
+    ]
+  },
+  {
+    id:'calcados', label:'👟 Calçados', items:[
+      'Tênis confortável','Bota impermeável','Chinelo p/ pousada','Meia extra'
+    ]
+  },
+  {
+    id:'higiene', label:'🧴 Higiene', items:[
+      'Hidratante labial','Protetor solar','Shampoo & cond.','Escova & pasta',
+      'Desodorante','Fio dental','Creme hidratante'
+    ]
+  },
+  {
+    id:'tech', label:'📱 Tech', items:[
+      'Carregador & cabo','Power bank','Adaptador tomada','Fone de ouvido'
+    ]
+  },
+  {
+    id:'docs', label:'📄 Docs & $', items:[
+      'Documento com foto','Cartão de crédito','Dinheiro espécie','Seguro viagem','Reservas impressas'
+    ]
+  },
+  {
+    id:'saude', label:'💊 Saúde', items:[
+      'Remédios pessoais','Dipirona / paracetamol','Antialérgico','Band-aids','Protetor labial'
+    ]
+  },
+];
+
+// checklist state: { catId_itemIdx: bool }
+let malaChecked = {};
+let activeMalaTab = 0;
+
+function renderMala() {
+  const menu = document.getElementById('malaMenu');
+  const sections = document.getElementById('malaSections');
+  menu.innerHTML = '';
+  sections.innerHTML = '';
+  malaCategories.forEach((cat, i) => {
+    const btn = document.createElement('button');
+    btn.className = 'mala-tab-btn' + (i === activeMalaTab ? ' active' : '');
+    btn.textContent = cat.label;
+    btn.onclick = () => { activeMalaTab = i; renderMala(); };
+    menu.appendChild(btn);
+
+    const sec = document.createElement('div');
+    sec.className = 'mala-section' + (i === activeMalaTab ? ' active' : '');
+    const grid = document.createElement('div');
+    grid.className = 'checklist-grid';
+    cat.items.forEach((item, j) => {
+      const key = cat.id + '_' + j;
+      const checked = malaChecked[key] || false;
+      const card = document.createElement('div');
+      card.className = 'check-card' + (checked ? ' checked' : '');
+      card.innerHTML = `<div class="check-circle-sm">✓</div><div class="check-text">${item}</div>`;
+      card.onclick = () => {
+        malaChecked[key] = !malaChecked[key];
+        saveState();
+        checkMalaComplete();
+        renderMala();
+      };
+      grid.appendChild(card);
+    });
+    sec.appendChild(grid);
+    sections.appendChild(sec);
+  });
+  checkMalaComplete();
+}
+
+function checkMalaComplete() {
+  const total = malaCategories.reduce((s,c) => s + c.items.length, 0);
+  const done = Object.values(malaChecked).filter(Boolean).length;
+  const successEl = document.getElementById('malaSuccess');
+  if (done >= total) {
+    successEl.classList.add('show');
+    document.getElementById('malaSections').style.display = 'none';
+  } else {
+    successEl.classList.remove('show');
+    document.getElementById('malaSections').style.display = '';
+  }
+}
+
+function resetMala() {
+  malaChecked = {};
+  saveState();
+  renderMala();
+}
+
+// ===== EMOJI PICKER =====
+const EMOJI_SETS = {
+  gastronomia:['🍽️','☕','🫕','🍣','🍕','🥂','🍷','🍰','🧇'],
+  natureza:['🌿','🌊','🏞️','🌸','🌲','🌄','🦁','🫒','🌺'],
+  aventura:['⚡','🎢','❄️','🔭','🧗','🛷','🚵','🪂'],
+  compras:['🛍️','🍫','🎁','💍','👗','🧣','📦'],
+  cultura:['🎭','🚂','🎠','🏛️','🎨','📸','🎵'],
+  hotel:['🏨','🏡','🛎️','🛏️','🌟'],
+  outro:['📍','⭐','💫','🎯','🗺️','🔑','🎉'],
+};
+
+function buildEmojiPicker(cat) {
+  const row = document.getElementById('emojiPickerRow');
+  row.innerHTML = '';
+  const emojis = EMOJI_SETS[cat] || EMOJI_SETS.outro;
+  emojis.forEach(em => {
+    const span = document.createElement('span');
+    span.className = 'emoji-opt';
+    span.textContent = em;
+    span.onclick = () => {
+      document.getElementById('formEmoji').value = em;
+      document.querySelectorAll('.emoji-opt').forEach(e => e.classList.remove('sel'));
+      span.classList.add('sel');
+    };
+    row.appendChild(span);
+  });
+}
+
+function syncEmojiSel(val) {
+  document.querySelectorAll('.emoji-opt').forEach(e => e.classList.toggle('sel', e.textContent === val));
+}
+
+function onCatChange(sel) {
+  const wrap = document.getElementById('catManualWrap');
+  wrap.classList.toggle('show', sel.value === 'outro');
+  buildEmojiPicker(sel.value);
+}
+
+// ===== DATE UTILS =====
+const DAYS_PT = ['dom','seg','ter','qua','qui','sex','sáb'];
+const MONTHS_PT = ['jan','fev','mar','abr','mai','jun','jul','ago','set','out','nov','dez'];
+const MONTHS_FULL = ['Janeiro','Fevereiro','Março','Abril','Maio','Junho','Julho','Agosto','Setembro','Outubro','Novembro','Dezembro'];
+
+function parseDate(str) {
+  const [y,m,d] = str.split('-').map(Number);
+  return new Date(y, m-1, d);
+}
+function formatDateShort(d) { return `${d.getDate()} ${MONTHS_PT[d.getMonth()]}`; }
+function formatDateFull(d) { return `${d.getDate()} de ${MONTHS_FULL[d.getMonth()]}`; }
+function getDayOfWeek(d) { return DAYS_PT[d.getDay()]; }
+
+// ===== BUILD DAYS =====
+function onDatesChanged() {
+  const start = document.getElementById('dateStart').value;
+  const end = document.getElementById('dateEnd').value;
+  if (!start || !end) return;
+  const s = parseDate(start), e = parseDate(end);
+  if (e < s) { document.getElementById('dateEnd').value = start; return; }
+  const oldDays = days.slice();
+  days = [];
+  let cur = new Date(s);
+  while (cur <= e) {
+    const dateStr = cur.toISOString().slice(0,10);
+    const existing = oldDays.find(d => d.date === dateStr);
+    const idx = days.length;
+    const defaultLabels = ['Chegada','Explorar','Aventura','Partida','Serra','Natureza','Centro'];
+    days.push({
+      date: dateStr,
+      label: existing ? existing.label : (defaultLabels[idx] || `Dia ${idx+1}`),
+      activities: existing ? existing.activities : []
+    });
+    cur.setDate(cur.getDate()+1);
+  }
+  currentDay = 0;
+  renderDays();
+  renderBudget();
+  saveState();
+}
+
+// ===== RENDER DAYS =====
+function renderDays() {
+  renderStoryRow();
+  renderDayPanels();
+  renderBudgetDayTabs();
+  populateDaySelect();
+}
+
+function renderStoryRow() {
+  const row = document.getElementById('storyRow');
+  row.innerHTML = '';
+  days.forEach((day, idx) => {
+    const d = parseDate(day.date);
+    const item = document.createElement('div');
+    item.className = 'story-item';
+    item.innerHTML = `
+      <div class="story-ring ${idx !== currentDay ? 'seen' : ''}" id="ring-${idx}">
+        <div class="story-inner">
+          <span class="day-n">${d.getDate()}</span>
+          <span>${getDayOfWeek(d)}</span>
+        </div>
+      </div>
+      <div class="story-label-wrap">
+        <span class="story-label" id="day-label-${idx}" ondblclick="editDayLabel(${idx})" title="Clique duas vezes para editar">${day.label}</span>
+        <button class="story-label-btn" onclick="editDayLabel(${idx})" title="Editar nome">✏</button>
+      </div>
+    `;
+    item.querySelector('.story-ring').addEventListener('click', () => selectDay(idx));
+    row.appendChild(item);
+  });
+  updateProgress();
+}
+
+function editDayLabel(idx) {
+  const span = document.getElementById('day-label-' + idx);
+  if (!span) return;
+  const current = days[idx].label;
+  const input = document.createElement('input');
+  input.className = 'story-label-edit';
+  input.value = current;
+  input.onblur = () => {
+    days[idx].label = input.value.trim() || current;
+    saveState();
+    renderDays();
+  };
+  input.onkeydown = (e) => { if (e.key === 'Enter') input.blur(); };
+  span.replaceWith(input);
+  input.focus(); input.select();
+}
+
+function toggleLayout() {
+  layoutMode = layoutMode === 'kanban' ? 'list' : 'kanban';
+  saveState();
+  renderDayPanels();
+}
+
+function renderDayPanels() {
+  const container = document.getElementById('dayPanelsContainer');
+  container.innerHTML = '';
+  days.forEach((day, idx) => {
+    const panel = document.createElement('div');
+    panel.className = 'day-panel' + (idx === currentDay ? ' active' : '');
+    panel.id = 'day-' + idx;
+    const d = parseDate(day.date);
+
+    const header = document.createElement('div');
+    header.className = 'kanban-header';
+    const isKanban = layoutMode === 'kanban';
+    header.innerHTML = `
+      <span class="kanban-date-label">${formatDateFull(d)} · ${getDayOfWeek(d)}</span>
+      <div class="kanban-header-right">
+        <span class="kanban-count">${day.activities.length} atividade${day.activities.length !== 1 ? 's' : ''}</span>
+        <div class="layout-toggle">
+          <button class="layout-btn layout-btn-kanban ${isKanban?'active':''}" onclick="toggleLayout()" title="Cards">⊞</button>
+          <button class="layout-btn layout-btn-list ${!isKanban?'active':''}" onclick="toggleLayout()" title="Lista">☰</button>
+        </div>
+      </div>
+    `;
+    panel.appendChild(header);
+
+    if (layoutMode === 'kanban') {
+      const wrap = document.createElement('div');
+      wrap.className = 'kanban-wrap';
+      const scroll = document.createElement('div');
+      scroll.className = 'kanban-scroll';
+      if (day.activities.length === 0) {
+        scroll.innerHTML = `<div class="empty-day" style="min-width:220px"><div class="empty-icon">🌿</div><p>Nenhuma atividade ainda.<br>Adicione do Descobrir!</p></div>`;
+      } else {
+        day.activities.forEach((act, aIdx) => scroll.appendChild(buildActCard(act, idx, aIdx)));
+      }
+      const addCard = document.createElement('div');
+      addCard.className = 'add-act-card';
+      addCard.innerHTML = '<span>＋</span><div>Adicionar</div>';
+      addCard.onclick = () => openAddModal(idx);
+      scroll.appendChild(addCard);
+      initDragScroll(scroll);
+      wrap.appendChild(scroll);
+      panel.appendChild(wrap);
+    } else {
+      const listWrap = document.createElement('div');
+      listWrap.className = 'list-scroll';
+      if (day.activities.length === 0) {
+        listWrap.innerHTML = `<div class="empty-day"><div class="empty-icon">🌿</div><p>Nenhuma atividade ainda.<br>Adicione do Descobrir ou crie a sua!</p></div>`;
+      } else {
+        day.activities.forEach((act, aIdx) => listWrap.appendChild(buildActCard(act, idx, aIdx)));
+      }
+      const addCard = document.createElement('div');
+      addCard.className = 'add-act-card';
+      addCard.innerHTML = '<span>＋</span><div>Adicionar atividade</div>';
+      addCard.onclick = () => openAddModal(idx);
+      listWrap.appendChild(addCard);
+      panel.appendChild(listWrap);
+    }
+
+    container.appendChild(panel);
+  });
+}
+
+function initDragScroll(el) {
+  let isDown = false, startX, scrollLeft;
+  el.addEventListener('mousedown', e => {
+    isDown = true; el.style.cursor = 'grabbing';
+    startX = e.pageX - el.offsetLeft;
+    scrollLeft = el.scrollLeft;
+  });
+  el.addEventListener('mouseleave', () => { isDown = false; el.style.cursor = 'grab'; });
+  el.addEventListener('mouseup', () => { isDown = false; el.style.cursor = 'grab'; });
+  el.addEventListener('mousemove', e => {
+    if (!isDown) return;
+    e.preventDefault();
+    el.scrollLeft = scrollLeft - (e.pageX - el.offsetLeft - startX) * 1.2;
+  });
+}
+
+function buildActCard(act, dayIdx, aIdx) {
+  const card = document.createElement('div');
+  card.className = `act-card cat-${act.cat}`;
+  const timeLabel = act.time ? `<div class="act-time-badge">🕐 ${act.time}</div>` : `<div class="act-time-badge empty">sem horário</div>`;
+  card.innerHTML = `
+    <div class="act-card-top">
+      ${act.emoji || '📍'}
+      <div class="act-cat-strip"></div>
+    </div>
+    <div class="act-card-body">
+      ${timeLabel}
+      <div class="act-name">${act.name}</div>
+      <div class="act-cat-label">${getCatLabel(act.cat)}</div>
+      ${act.desc ? `<div class="act-desc-sm">${act.desc}</div>` : ''}
+      <div class="act-footer">
+        <div>${act.price > 0 ? `<span class="act-price-sm">R$ ${act.price}</span>` : `<span class="act-price-free">Gratuito</span>`}</div>
+        <div class="act-check-sm">✓</div>
+      </div>
+      <div class="act-actions">
+        <button class="act-btn act-btn-edit" onclick="openEditModal(${dayIdx},${aIdx},event)">✏ Editar</button>
+        <button class="act-btn act-btn-del" onclick="deleteActivity(${dayIdx},${aIdx},event)">🗑</button>
+      </div>
+    </div>
+  `;
+  card.querySelector('.act-check-sm').addEventListener('click', (e) => {
+    e.stopPropagation();
+    card.classList.toggle('done');
+    updateProgress();
+    saveState();
+  });
+  return card;
+}
+
+function getCatLabel(cat) {
+  const map = {gastronomia:'Gastronomia',natureza:'Natureza',aventura:'Aventura',compras:'Compras',cultura:'Cultura',hotel:'Serviço',noturno:'Noturno'};
+  return map[cat] || cat;
+}
+
+// ===== SELECT DAY =====
+function selectDay(idx) {
+  currentDay = idx;
+  document.querySelectorAll('.day-panel').forEach(p => p.classList.remove('active'));
+  const panel = document.getElementById('day-' + idx);
+  if (panel) panel.classList.add('active');
+  document.querySelectorAll('.story-ring').forEach((r, i) => r.classList.toggle('seen', i !== idx));
+  updateProgress();
+  saveState();
+}
+
+function updateProgress() {
+  const panel = document.getElementById('day-' + currentDay);
+  if (!panel) return;
+  const all = panel.querySelectorAll('.act-card').length;
+  const done = panel.querySelectorAll('.act-card.done').length;
+  const pct = all ? Math.round((done/all)*100) : 0;
+  document.getElementById('progFill').style.width = pct + '%';
+  document.getElementById('progTxt').textContent = `${done} de ${all} feitas`;
+}
+
+// ===== ADD / EDIT MODAL =====
+let preselectedDay = null;
+let prefilledActivity = null;
+let isEditing = false;
+let editDayIdx = null;
+let editActIdx = null;
+
+function openAddModal(dayIdx) {
+  isEditing = false;
+  editDayIdx = null;
+  editActIdx = null;
+  preselectedDay = dayIdx !== undefined ? dayIdx : currentDay;
+  document.getElementById('modalTitle').innerHTML = '<em>Adicionar</em> Atividade';
+  document.getElementById('modalConfirmBtn').textContent = 'Adicionar ao Roteiro ✓';
+  document.getElementById('formName').value = '';
+  document.getElementById('formTime').value = '';
+  document.getElementById('formPrice').value = '';
+  document.getElementById('formEmoji').value = '';
+  document.getElementById('formDesc').value = '';
+  document.getElementById('formCat').value = 'gastronomia';
+  document.getElementById('catManualWrap').classList.remove('show');
+  buildEmojiPicker('gastronomia');
+  if (prefilledActivity) {
+    document.getElementById('formName').value = prefilledActivity.name || '';
+    document.getElementById('formCat').value = prefilledActivity.cat || 'gastronomia';
+    document.getElementById('formPrice').value = prefilledActivity.price || '';
+    document.getElementById('formEmoji').value = prefilledActivity.emoji || '';
+    document.getElementById('formDesc').value = prefilledActivity.desc || '';
+    buildEmojiPicker(prefilledActivity.cat || 'gastronomia');
+    prefilledActivity = null;
+  }
+  populateDaySelect();
+  if (preselectedDay !== null) document.getElementById('formDay').value = preselectedDay;
+  document.getElementById('addModal').classList.add('open');
+}
+
+function openEditModal(dayIdx, actIdx, e) {
+  e && e.stopPropagation();
+  isEditing = true;
+  editDayIdx = dayIdx;
+  editActIdx = actIdx;
+  const act = days[dayIdx].activities[actIdx];
+  document.getElementById('modalTitle').innerHTML = '<em>Editar</em> Atividade';
+  document.getElementById('modalConfirmBtn').textContent = 'Salvar alterações ✓';
+  document.getElementById('formName').value = act.name;
+  document.getElementById('formTime').value = act.time || '';
+  document.getElementById('formPrice').value = act.price || '';
+  document.getElementById('formEmoji').value = act.emoji || '';
+  document.getElementById('formDesc').value = act.desc || '';
+  document.getElementById('formCat').value = act.cat;
+  buildEmojiPicker(act.cat);
+  document.getElementById('catManualWrap').classList.remove('show');
+  populateDaySelect();
+  document.getElementById('formDay').value = dayIdx;
+  document.getElementById('addModal').classList.add('open');
+}
+
+function closeAddModal() {
+  document.getElementById('addModal').classList.remove('open');
+  prefilledActivity = null;
+}
+
+function closeModalOnBg(e) {
+  if (e.target === document.getElementById('addModal')) closeAddModal();
+}
+
+function populateDaySelect() {
+  const sel = document.getElementById('formDay');
+  sel.innerHTML = '';
+  days.forEach((day, idx) => {
+    const d = parseDate(day.date);
+    const opt = document.createElement('option');
+    opt.value = idx;
+    opt.textContent = `${formatDateFull(d)} — ${day.label}`;
+    sel.appendChild(opt);
+  });
+  if (preselectedDay !== null) sel.value = preselectedDay;
+}
+
+function confirmActivity() {
+  const name = document.getElementById('formName').value.trim();
+  if (!name) { showToast('Informe o nome da atividade'); return; }
+  const dayIdx = parseInt(document.getElementById('formDay').value);
+  const catSel = document.getElementById('formCat').value;
+  const cat = catSel === 'outro' ? (document.getElementById('formCatManual').value.trim() || 'outro') : catSel;
+  const act = {
+    name,
+    cat,
+    time: document.getElementById('formTime').value,
+    price: parseFloat(document.getElementById('formPrice').value) || 0,
+    emoji: document.getElementById('formEmoji').value || getDefaultEmoji(cat),
+    desc: document.getElementById('formDesc').value.trim(),
+    done: false,
+  };
+  if (isEditing) {
+    days[editDayIdx].activities[editActIdx] = act;
+  } else {
+    days[dayIdx].activities.push(act);
+  }
+  closeAddModal();
+  selectDay(dayIdx);
+  renderDays();
+  renderBudget();
+  saveState();
+  showToast(isEditing ? '✓ Atividade atualizada' : '✓ Atividade adicionada');
+}
+
+function getDefaultEmoji(cat) {
+  const m = {gastronomia:'🍽️',natureza:'🌿',aventura:'⚡',compras:'🛍️',cultura:'🎭',hotel:'🏨',noturno:'🌙'};
+  return m[cat] || '📍';
+}
+
+function deleteActivity(dayIdx, actIdx, e) {
+  e && e.stopPropagation();
+  days[dayIdx].activities.splice(actIdx, 1);
+  renderDays();
+  renderBudget();
+  saveState();
+  showToast('🗑 Atividade removida');
+}
+
+// ===== DISCOVER =====
+function renderDiscover() {
+  const list = document.getElementById('discoverList');
+  const query = (document.getElementById('discoverSearch').value || '').toLowerCase();
+  let filtered = discoverItems;
+  if (discoverFilter !== 'todos') filtered = filtered.filter(i => i.cat === discoverFilter);
+  if (query) filtered = filtered.filter(i =>
+    i.name.toLowerCase().includes(query) ||
+    i.desc.toLowerCase().includes(query) ||
+    i.tags.some(t => t.toLowerCase().includes(query))
+  );
+  list.innerHTML = '';
+  filtered.forEach(item => {
+    const card = document.createElement('div');
+    card.className = 'discover-card';
+    const isAdded = days.some(d => d.activities.some(a => a.name === item.name));
+    card.innerHTML = `
+      <div class="discover-card-img">${item.emoji}</div>
+      <div class="discover-card-body">
+        <div class="discover-card-name">${item.name}</div>
+        <div class="discover-card-price">${item.price > 0 ? 'R$ '+item.price : 'Grátis'}</div>
+        <div class="discover-card-desc">${item.desc}</div>
+        <div class="discover-card-tags">${item.tags.map(t => `<span class="tag">${t}</span>`).join('')}</div>
+        <button class="discover-add-btn ${isAdded ? 'added' : ''}" onclick="addFromDiscover('${item.id}',event)">
+          ${isAdded ? '✓ Adicionado' : '+ Roteiro'}
+        </button>
+      </div>
+    `;
+    card.addEventListener('click', (e) => {
+      if (e.target.classList.contains('discover-add-btn')) return;
+      openDiscoverDetail(item);
+    });
+    list.appendChild(card);
+  });
+}
+
+function filterDiscover(cat, btn) {
+  discoverFilter = cat;
+  document.querySelectorAll('.filter-chip').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  renderDiscover();
+}
+
+function addFromDiscover(id, e) {
+  e && e.stopPropagation();
+  const item = discoverItems.find(i => i.id === id);
+  if (!item) return;
+  prefilledActivity = { ...item };
+  closeDiscoverModal();
+  openAddModal(currentDay);
+}
+
+function openDiscoverDetail(item) {
+  const isAdded = days.some(d => d.activities.some(a => a.name === item.name));
+  document.getElementById('discoverModalContent').innerHTML = `
+    <div class="discover-detail-content">
+      <div class="discover-detail-emoji">${item.emoji}</div>
+      <div class="discover-detail-name" style="font-family:'Cormorant Garamond',serif;font-size:24px;color:var(--bark);margin-bottom:4px;">${item.name}</div>
+      <div class="discover-detail-info">
+        <span class="discover-detail-badge">💰 ${item.price > 0 ? 'R$ ' + item.price : 'Grátis'}</span>
+        <span class="discover-detail-badge">📂 ${getCatLabel(item.cat)}</span>
+        ${item.tags.map(t => `<span class="discover-detail-badge">${t}</span>`).join('')}
+      </div>
+      <div class="discover-detail-desc">${item.desc}</div>
+      <button class="btn-primary ${isAdded ? '' : ''}" onclick="addFromDiscover('${item.id}')">
+        ${isAdded ? '✓ Já no roteiro' : '+ Adicionar ao roteiro'}
+      </button>
+    </div>
+  `;
+  document.getElementById('discoverModal').classList.add('open');
+}
+
+function closeDiscoverModal(e) {
+  if (!e || e.target === document.getElementById('discoverModal')) {
+    document.getElementById('discoverModal').classList.remove('open');
+  }
+}
+
+// ===== WEATHER =====
+function editWeather() {
+  document.getElementById('weatherInput').value = weatherText;
+  document.getElementById('weatherModal').classList.add('open');
+}
+function saveWeather() {
+  const val = document.getElementById('weatherInput').value.trim();
+  if (val) { weatherText = val; document.getElementById('weatherText').textContent = val; saveState(); }
+  closeWeatherModal();
+}
+function closeWeatherModal(e) {
+  if (!e || e.target === document.getElementById('weatherModal')) {
+    document.getElementById('weatherModal').classList.remove('open');
+  }
+}
+
+// ===== BUDGET =====
+function renderBudget() {
+  let total = 0;
+  days.forEach(d => d.activities.forEach(a => total += (a.price || 0)));
+  document.getElementById('bgtTotalAll').textContent = `R$ ${total.toLocaleString('pt-BR')}`;
+  renderBudgetDayTabs();
+  renderBudgetDayPanels();
+}
+
+function renderBudgetDayTabs() {
+  const tabs = document.getElementById('budgetDaysTabs');
+  tabs.innerHTML = '';
+  const allTab = document.createElement('button');
+  allTab.className = 'bgt-day-tab' + (currentBudgetDay === 'all' ? ' active' : '');
+  allTab.textContent = 'Todos';
+  allTab.onclick = () => { currentBudgetDay = 'all'; renderBudgetDayTabs(); renderBudgetDayPanels(); };
+  tabs.appendChild(allTab);
+  days.forEach((day, idx) => {
+    const d = parseDate(day.date);
+    const btn = document.createElement('button');
+    btn.className = 'bgt-day-tab' + (currentBudgetDay === idx ? ' active' : '');
+    btn.textContent = formatDateShort(d);
+    btn.onclick = () => { currentBudgetDay = idx; renderBudgetDayTabs(); renderBudgetDayPanels(); };
+    tabs.appendChild(btn);
+  });
+}
+
+function renderBudgetDayPanels() {
+  const container = document.getElementById('budgetDayPanels');
+  container.innerHTML = '';
+  const show = currentBudgetDay === 'all'
+    ? days.flatMap((d,i) => d.activities.map(a => ({...a, dayIdx:i, dayLabel:d.label})))
+    : (days[currentBudgetDay]?.activities || []).map(a => ({...a, dayIdx:currentBudgetDay, dayLabel:days[currentBudgetDay].label}));
+  const priced = show.filter(a => a.price > 0);
+  const dayTotal = priced.reduce((s,a) => s + a.price, 0);
+  if (priced.length === 0) {
+    container.innerHTML = `<div class="bgt-empty">Nenhuma atividade com preço<br>adicionada ainda 🌿</div>`;
+    return;
+  }
+  const list = document.createElement('div');
+  list.className = 'budget-items-list';
+  priced.forEach(a => {
+    const item = document.createElement('div');
+    item.className = 'bgt-item';
+    item.innerHTML = `
+      <div class="bgt-item-left">
+        <div class="bgt-item-emoji">${a.emoji || '📍'}</div>
+        <div>
+          <div class="bgt-item-name">${a.name}</div>
+          ${currentBudgetDay === 'all' ? `<div class="bgt-item-day">${a.dayLabel}</div>` : ''}
+        </div>
+      </div>
+      <div class="bgt-item-val">R$ ${a.price}</div>
+    `;
+    list.appendChild(item);
+  });
+  container.appendChild(list);
+  const totalRow = document.createElement('div');
+  totalRow.className = 'bgt-day-total';
+  totalRow.innerHTML = `<span>Total ${currentBudgetDay === 'all' ? 'geral' : 'do dia'}</span><span>R$ ${dayTotal.toLocaleString('pt-BR')}</span>`;
+  container.appendChild(totalRow);
+}
+
+// ===== TAB SWITCH =====
+function switchTab(name, btn) {
+  document.querySelectorAll('.tab-content').forEach(t => t.classList.remove('active'));
+  document.querySelectorAll('.nav-item, .pill').forEach(b => b.classList.remove('active'));
+  document.getElementById('tab-' + name).classList.add('active');
+  if (document.getElementById('bnav-' + name)) document.getElementById('bnav-' + name).classList.add('active');
+  if (btn) btn.classList.add('active');
+  if (name === 'descobrir') renderDiscover();
+  if (name === 'orcamento') renderBudget();
+  if (name === 'mala') renderMala();
+}
+
+// ===== NOTES =====
+function saveNote() {
+  const val = document.getElementById('noteInput').value.trim();
+  if (!val) return;
+  const now = new Date();
+  const dateStr = `${now.getDate()}/${now.getMonth()+1} ${now.getHours()}:${String(now.getMinutes()).padStart(2,'0')}`;
+  const card = document.createElement('div');
+  card.className = 'note-card';
+  card.innerHTML = `
+    <div class="note-header"><div class="note-dot" style="background:var(--rose)"></div><span class="note-type">Minha Nota</span></div>
+    <div class="note-body">${val}</div>
+    <div class="note-date">${dateStr} ✓</div>
+  `;
+  document.getElementById('notesFeed').prepend(card);
+  document.getElementById('noteInput').value = '';
+  showToast('✓ Nota salva');
+}
+
+// ===== TOAST =====
+function showToast(msg) {
+  const t = document.getElementById('toastEl');
+  t.textContent = msg;
+  t.classList.add('show');
+  setTimeout(() => t.classList.remove('show'), 2200);
+}
+
+// ===== PERSISTENCE (localStorage) =====
+const STORAGE_KEY = 'gramado_v2';
+
+function saveState() {
+  const state = {
+    days,
+    currentDay,
+    weatherText,
+    malaChecked,
+    layoutMode,
+    dateStart: document.getElementById('dateStart').value,
+    dateEnd: document.getElementById('dateEnd').value,
+  };
+  try { localStorage.setItem(STORAGE_KEY, JSON.stringify(state)); } catch(e) {}
+}
+
+function loadState() {
+  try {
+    const raw = localStorage.getItem(STORAGE_KEY);
+    if (!raw) return false;
+    const state = JSON.parse(raw);
+    if (state.dateStart) document.getElementById('dateStart').value = state.dateStart;
+    if (state.dateEnd) document.getElementById('dateEnd').value = state.dateEnd;
+    if (state.days) days = state.days;
+    if (state.currentDay !== undefined) currentDay = state.currentDay;
+    if (state.weatherText) { weatherText = state.weatherText; document.getElementById('weatherText').textContent = weatherText; }
+    if (state.malaChecked) malaChecked = state.malaChecked;
+    if (state.layoutMode) layoutMode = state.layoutMode;
+    return true;
+  } catch(e) { return false; }
+}
+
+// ===== INIT =====
+function init() {
+  initHeroSlideshow();
+  const loaded = loadState();
+  if (loaded && days.length > 0) {
+    renderDays();
+    renderBudget();
+    selectDay(currentDay);
+  } else {
+    onDatesChanged();
+  }
+  renderMala();
+}
+
+init();
+</script>
+</body>
+</html>
