@@ -19,14 +19,47 @@
   --mist: #b8c4bf;
   --text: #3d2e2b;
   --white: #ffffff;
+  --card-bg: #ffffff;
+  --nav-bg: #ffffff;
+  --input-bg: #ffffff;
+  --sec-title-color: var(--bark);
+}
+body.dark {
+  /* Backgrounds — deep mauve/plum, not pitch black */
+  --cream: #1e1520;
+  --warm: #261a28;
+  --blush: #3a2840;
+
+  /* Cards/surfaces — slightly lighter plum */
+  --card-bg: #2c1f32;
+  --nav-bg: #1a1020;
+  --input-bg: #342540;
+  --white: #2c1f32;
+
+  /* Text — warm off-white, very readable */
+  --text: #f0e6ee;
+  --taupe: #c9aed0;
+
+  /* Accents — kept vibrant but slightly brightened */
+  --rose: #e8968c;
+  --dusty: #d4a898;
+  --bark: #f0b8b0;
+  --sage: #96aa8e;
+  --gold: #dfc080;
+  --mist: #9ab8b4;
+
+  /* Borders */
+  --blush: #4a3050;
+
+  --sec-title-color: #f0b8b0;
 }
 *{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent;}
 body{background:var(--cream);color:var(--text);font-family:'DM Sans',sans-serif;min-height:100vh;overflow-x:hidden;}
 .app{max-width:430px;margin:0 auto;padding-bottom:90px;background:var(--cream);position:relative;}
 
 /* ===== HERO STATIC ===== */
-.hero{position:relative;height:260px;overflow:hidden;background:linear-gradient(160deg,#7d8f76 0%,#c4a090 45%,#8b6f6a 100%);}
-.hero::after{content:'';position:absolute;inset:0;background:linear-gradient(to bottom,rgba(0,0,0,0.08) 0%,rgba(50,25,20,0.65) 100%);}
+.hero{position:relative;height:260px;overflow:hidden;background:linear-gradient(150deg,#4a6858 0%,#5c3d35 50%,#7d5a50 100%);}
+.hero::after{content:'';position:absolute;inset:0;background:linear-gradient(to bottom,rgba(0,0,0,0.05) 0%,rgba(0,0,0,0.40) 100%);}
 .hero-content{position:relative;z-index:2;padding:40px 22px 22px;height:100%;display:flex;flex-direction:column;justify-content:flex-end;}
 .hero-tag{display:inline-flex;align-items:center;gap:6px;background:rgba(255,255,255,0.22);backdrop-filter:blur(10px);padding:5px 13px;border-radius:20px;font-size:11px;color:white;letter-spacing:1px;margin-bottom:10px;width:fit-content;}
 .hero-title{font-family:'Cormorant Garamond',serif;font-size:50px;font-weight:300;color:white;line-height:1;letter-spacing:1px;}
@@ -41,6 +74,30 @@ body{background:var(--cream);color:var(--text);font-family:'DM Sans',sans-serif;
 .weather-chip:hover{background:rgba(255,255,255,0.28);}
 .weather-chip .lbl{font-size:9px;opacity:0.75;letter-spacing:1px;text-transform:uppercase;display:block;margin-bottom:1px;}
 .weather-edit-input{background:transparent;border:none;border-bottom:1px solid rgba(255,255,255,0.5);color:white;font-family:'DM Sans',sans-serif;font-size:12px;outline:none;width:70px;}
+.dark-toggle{position:absolute;top:14px;right:14px;z-index:10;background:rgba(255,255,255,0.18);backdrop-filter:blur(10px);border:1px solid rgba(255,255,255,0.28);border-radius:50%;width:36px;height:36px;font-size:16px;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:all 0.25s;line-height:1;}
+.dark-toggle:active{transform:scale(0.92);}
+body.dark .dark-toggle{background:rgba(255,255,255,0.14);}
+body.dark .sec-title{color:var(--sec-title-color);}
+body.dark .modal-sheet{background:#261a2e;}
+body.dark .layout-toggle{background:#342540;}
+body.dark .prog-bar{background:#3a2840;}
+body.dark .check-card.checked{background:#1e1228;}
+body.dark .mala-success{background:linear-gradient(135deg,#1e2830,#1a2028);}
+body.dark .budget-days-tabs .bgt-day-tab{border-color:#4a3050;}
+body.dark .discover-filters .filter-chip{border-color:#4a3050;}
+body.dark .pills-nav .pill{border-color:#4a3050;}
+body.dark .kanban-wrap::after{background:linear-gradient(to right,transparent,#1e1520);}
+body.dark .act-card-top{background:linear-gradient(135deg,#3a2840,#4a3050);}
+body.dark .budget-overview{background:linear-gradient(135deg,#4a2840 0%,#6a3858 100%);}
+body.dark .quote-block{background:#261a2e;border-left-color:var(--rose);}
+body.dark .nav-label{color:#c9aed0;}
+body.dark .add-act-card{border-color:#4a3050;color:#c9aed0;}
+body.dark .bgt-day-total{background:#342540;}
+body.dark .mala-tab-btn{border-color:#4a3050;}
+body.dark textarea.note-input{border-color:#4a3050;}
+body.dark .form-input, body.dark .form-select, body.dark .form-textarea{border-color:#4a3050;color:var(--text);}
+body.dark .discover-search input{border-color:#4a3050;}
+body.dark .tag{background:#3a2840;color:#c9aed0;}
 
 /* ===== PILLS NAV ===== */
 .pills-nav{display:flex;gap:8px;padding:16px 18px 4px;overflow-x:auto;scrollbar-width:none;}
@@ -89,8 +146,18 @@ body{background:var(--cream);color:var(--text);font-family:'DM Sans',sans-serif;
 /* layout toggle */
 .layout-toggle{display:flex;background:var(--warm);border-radius:10px;padding:3px;gap:2px;border:none;}
 .layout-btn{background:transparent;border:none;cursor:pointer;padding:5px 8px;border-radius:8px;font-size:13px;transition:all 0.2s;line-height:1;}
-.layout-btn.active{background:white;box-shadow:0 1px 4px rgba(93,61,53,0.12);}
+.layout-btn.active{background:var(--card-bg);box-shadow:0 1px 4px rgba(93,61,53,0.12);}
 
+
+/* ===== PENDING FILTER TOGGLE ===== */
+.pending-toggle{position:relative;width:36px;height:20px;background:var(--blush);border-radius:10px;border:none;cursor:pointer;transition:background 0.25s;flex-shrink:0;}
+.pending-toggle::after{content:'';position:absolute;top:3px;left:3px;width:14px;height:14px;border-radius:50%;background:var(--taupe);transition:transform 0.25s,background 0.25s;}
+.pending-toggle.active{background:var(--rose);}
+.pending-toggle.active::after{transform:translateX(16px);background:white;}
+body.dark .pending-toggle{background:#4a3050;}
+body.dark .pending-toggle::after{background:#c9aed0;}
+body.dark .pending-toggle.active{background:var(--rose);}
+body.dark .pending-toggle.active::after{background:white;}
 /* ===== KANBAN (horizontal scroll) ===== */
 .kanban-scroll{
   display:flex;
@@ -120,7 +187,7 @@ body{background:var(--cream);color:var(--text);font-family:'DM Sans',sans-serif;
 
 /* ===== ACTIVITY CARD — Kanban ===== */
 .act-card{
-  background:white;
+  background:var(--card-bg);
   border-radius:18px;
   width:calc(55vw);
   max-width:200px;
@@ -155,6 +222,7 @@ body{background:var(--cream);color:var(--text);font-family:'DM Sans',sans-serif;
 .cat-aventura .act-cat-strip{background:#e07040;}
 .cat-cultura .act-cat-strip{background:#7a6cad;}
 .cat-noturno .act-cat-strip{background:#4a3a7a;}
+.cat-deslocamento .act-cat-strip{background:#5a7a9a;}
 .act-card-body{padding:10px 12px 11px;}
 .act-time-badge{
   display:inline-flex;align-items:center;gap:4px;
@@ -238,13 +306,13 @@ body{background:var(--cream);color:var(--text);font-family:'DM Sans',sans-serif;
 .form-row{display:flex;gap:10px;margin-bottom:11px;}
 .form-group{display:flex;flex-direction:column;gap:5px;flex:1;}
 .form-label{font-size:10px;color:var(--taupe);letter-spacing:1px;text-transform:uppercase;}
-.form-input,.form-select,.form-textarea{background:white;border:1.5px solid var(--blush);border-radius:10px;color:var(--text);font-family:'DM Sans',sans-serif;font-size:13px;padding:10px 12px;outline:none;transition:border-color 0.2s;width:100%;}
+.form-input,.form-select,.form-textarea{background:var(--input-bg);border:1.5px solid var(--blush);border-radius:10px;color:var(--text);font-family:'DM Sans',sans-serif;font-size:13px;padding:10px 12px;outline:none;transition:border-color 0.2s;width:100%;}
 .form-input:focus,.form-select:focus,.form-textarea:focus{border-color:var(--rose);}
 .form-textarea{resize:none;height:58px;}
 .emoji-picker-row{display:flex;gap:8px;flex-wrap:wrap;margin-top:5px;}
 .emoji-opt{font-size:22px;cursor:pointer;padding:4px;border-radius:8px;transition:background 0.15s;line-height:1;}
 .emoji-opt:hover,.emoji-opt.sel{background:var(--blush);}
-.emoji-custom-input{background:white;border:1.5px solid var(--blush);border-radius:10px;font-size:18px;padding:8px 10px;outline:none;width:58px;text-align:center;}
+.emoji-custom-input{background:var(--input-bg);border:1.5px solid var(--blush);border-radius:10px;font-size:18px;padding:8px 10px;outline:none;width:58px;text-align:center;}
 .btn-primary{background:var(--bark);color:white;border:none;border-radius:12px;padding:13px;font-family:'DM Sans',sans-serif;font-size:13px;cursor:pointer;width:100%;letter-spacing:0.5px;transition:all 0.2s;margin-top:6px;}
 .btn-primary:hover{background:var(--rose);}
 .btn-secondary{background:transparent;color:var(--taupe);border:1.5px solid var(--blush);border-radius:12px;padding:12px;font-family:'DM Sans',sans-serif;font-size:13px;cursor:pointer;width:100%;margin-top:8px;}
@@ -253,7 +321,7 @@ body{background:var(--cream);color:var(--text);font-family:'DM Sans',sans-serif;
 
 /* ===== DISCOVER ===== */
 .discover-search{margin:0 20px 12px;position:relative;}
-.discover-search input{width:100%;background:white;border:1.5px solid var(--blush);border-radius:12px;padding:10px 14px 10px 36px;font-family:'DM Sans',sans-serif;font-size:13px;color:var(--text);outline:none;transition:border-color 0.2s;}
+.discover-search input{width:100%;background:var(--input-bg);border:1.5px solid var(--blush);border-radius:12px;padding:10px 14px 10px 36px;font-family:'DM Sans',sans-serif;font-size:13px;color:var(--text);outline:none;transition:border-color 0.2s;}
 .discover-search input:focus{border-color:var(--rose);}
 .discover-search .search-icon{position:absolute;left:12px;top:50%;transform:translateY(-50%);font-size:14px;pointer-events:none;}
 .discover-filters{display:flex;gap:8px;padding:0 20px 12px;overflow-x:auto;scrollbar-width:none;}
@@ -263,7 +331,7 @@ body{background:var(--cream);color:var(--text);font-family:'DM Sans',sans-serif;
 
 /* Discover cards grid */
 .discover-grid{display:grid;grid-template-columns:1fr 1fr;gap:11px;padding:0 18px;}
-.discover-card{background:white;border-radius:16px;overflow:hidden;box-shadow:0 3px 14px rgba(93,61,53,0.07);cursor:pointer;transition:transform 0.2s;}
+.discover-card{background:var(--card-bg);border-radius:16px;overflow:hidden;box-shadow:0 3px 14px rgba(93,61,53,0.07);cursor:pointer;transition:transform 0.2s;}
 .discover-card:active{transform:scale(0.97);}
 .discover-card-img{width:100%;height:90px;display:flex;align-items:center;justify-content:center;font-size:36px;background:linear-gradient(135deg,var(--blush),var(--mist));}
 .discover-card-body{padding:10px 11px 11px;}
@@ -296,7 +364,7 @@ body{background:var(--cream);color:var(--text);font-family:'DM Sans',sans-serif;
 .bgt-day-tab{flex-shrink:0;padding:6px 14px;border-radius:14px;font-size:12px;cursor:pointer;border:1.5px solid var(--blush);background:transparent;color:var(--taupe);font-family:'DM Sans',sans-serif;transition:all 0.2s;}
 .bgt-day-tab.active{background:var(--bark);color:white;border-color:var(--bark);}
 .budget-items-list{padding:0 20px;display:flex;flex-direction:column;gap:8px;}
-.bgt-item{background:white;border-radius:14px;padding:12px 14px;display:flex;justify-content:space-between;align-items:center;box-shadow:0 1px 8px rgba(93,61,53,0.05);}
+.bgt-item{background:var(--card-bg);border-radius:14px;padding:12px 14px;display:flex;justify-content:space-between;align-items:center;box-shadow:0 1px 8px rgba(93,61,53,0.05);}
 .bgt-item-left{display:flex;align-items:center;gap:10px;}
 .bgt-item-emoji{font-size:18px;}
 .bgt-item-name{font-size:13px;color:var(--bark);}
@@ -318,7 +386,7 @@ body{background:var(--cream);color:var(--text);font-family:'DM Sans',sans-serif;
 .quote-text{font-family:'Playfair Display',serif;font-style:italic;font-size:14px;color:var(--bark);line-height:1.6;}
 .quote-author{font-size:10px;color:var(--taupe);letter-spacing:1.5px;text-transform:uppercase;margin-top:7px;}
 .checklist-grid{padding:0 20px;display:grid;grid-template-columns:1fr 1fr;gap:10px;}
-.check-card{background:white;border-radius:14px;padding:13px;display:flex;align-items:center;gap:8px;box-shadow:0 2px 8px rgba(93,61,53,0.05);cursor:pointer;transition:all 0.2s;}
+.check-card{background:var(--card-bg);border-radius:14px;padding:13px;display:flex;align-items:center;gap:8px;box-shadow:0 2px 8px rgba(93,61,53,0.05);cursor:pointer;transition:all 0.2s;}
 .check-card.checked{background:var(--warm);opacity:0.7;}
 .check-circle-sm{width:26px;height:26px;border-radius:50%;border:1.5px solid var(--blush);flex-shrink:0;display:flex;align-items:center;justify-content:center;font-size:11px;transition:all 0.2s;color:transparent;}
 .check-card.checked .check-circle-sm{background:var(--rose);border-color:var(--rose);color:white;}
@@ -333,17 +401,17 @@ body{background:var(--cream);color:var(--text);font-family:'DM Sans',sans-serif;
 
 /* ===== NOTAS ===== */
 .notes-feed{padding:0 20px;display:flex;flex-direction:column;gap:12px;}
-.note-card{background:white;border-radius:16px;padding:16px;box-shadow:0 2px 10px rgba(93,61,53,0.05);}
+.note-card{background:var(--card-bg);border-radius:16px;padding:16px;box-shadow:0 2px 10px rgba(93,61,53,0.05);}
 .note-header{display:flex;align-items:center;gap:8px;margin-bottom:8px;}
 .note-dot{width:8px;height:8px;border-radius:50%;background:var(--rose);}
 .note-type{font-size:10px;color:var(--taupe);letter-spacing:1.5px;text-transform:uppercase;}
 .note-body{font-size:13px;color:var(--text);line-height:1.7;}
 .note-date{font-size:10px;color:var(--mist);margin-top:8px;text-align:right;}
-textarea.note-input{width:100%;background:white;border:1.5px solid var(--blush);border-radius:12px;color:var(--text);font-family:'DM Sans',sans-serif;font-size:13px;padding:12px 14px;resize:none;height:78px;margin-bottom:8px;outline:none;transition:border-color 0.2s;}
+textarea.note-input{width:100%;background:var(--input-bg);border:1.5px solid var(--blush);border-radius:12px;color:var(--text);font-family:'DM Sans',sans-serif;font-size:13px;padding:12px 14px;resize:none;height:78px;margin-bottom:8px;outline:none;transition:border-color 0.2s;}
 textarea.note-input:focus{border-color:var(--rose);}
 
 /* ===== BOTTOM NAV ===== */
-.bottom-nav{position:fixed;bottom:0;left:50%;transform:translateX(-50%);width:100%;max-width:430px;background:white;border-top:1px solid var(--blush);display:flex;padding:8px 0 16px;z-index:100;box-shadow:0 -8px 30px rgba(93,61,53,0.08);}
+.bottom-nav{position:fixed;bottom:0;left:50%;transform:translateX(-50%);width:100%;max-width:430px;background:var(--nav-bg);border-top:1px solid var(--blush);display:flex;padding:8px 0 16px;z-index:100;box-shadow:0 -8px 30px rgba(93,61,53,0.08);}
 .nav-item{flex:1;display:flex;flex-direction:column;align-items:center;gap:2px;background:none;border:none;cursor:pointer;padding:5px 0;}
 .nav-icon{font-size:19px;line-height:1;}
 .nav-label{font-size:10px;color:var(--mist);font-family:'DM Sans',sans-serif;letter-spacing:0.5px;}
@@ -354,16 +422,40 @@ textarea.note-input:focus{border-color:var(--rose);}
 /* Toasts */
 .toast{position:fixed;bottom:100px;left:50%;transform:translateX(-50%) translateY(20px);background:var(--bark);color:white;padding:10px 20px;border-radius:20px;font-size:12px;opacity:0;transition:all 0.3s;z-index:999;pointer-events:none;}
 .toast.show{opacity:1;transform:translateX(-50%) translateY(0);}
+
+/* ===== CONFIG TAB ===== */
+.config-section{padding:0 20px 18px;}
+.config-card{background:var(--card-bg);border-radius:18px;padding:18px;margin-bottom:14px;box-shadow:0 2px 12px rgba(93,61,53,0.07);}
+.config-card-title{font-family:'Cormorant Garamond',serif;font-size:18px;color:var(--bark);margin-bottom:14px;display:flex;align-items:center;gap:8px;}
+.config-row{display:flex;flex-direction:column;gap:5px;margin-bottom:12px;}
+.config-row:last-child{margin-bottom:0;}
+.config-label{font-size:10px;color:var(--taupe);letter-spacing:1px;text-transform:uppercase;}
+.config-input{background:var(--warm);border:1.5px solid transparent;border-radius:10px;color:var(--text);font-family:'DM Sans',sans-serif;font-size:14px;padding:10px 13px;outline:none;transition:border-color 0.2s,background 0.2s;width:100%;}
+.config-input:focus{border-color:var(--rose);background:var(--input-bg);}
+.config-divider{height:1px;background:var(--blush);margin:4px 0 14px;}
+.config-btn-row{display:flex;gap:10px;margin-top:4px;}
+.config-btn{flex:1;padding:13px;border:none;border-radius:12px;font-family:'DM Sans',sans-serif;font-size:13px;cursor:pointer;transition:all 0.2s;font-weight:500;}
+.config-btn-export{background:var(--bark);color:white;}
+.config-btn-export:active{background:var(--rose);}
+.config-btn-import{background:var(--warm);color:var(--bark);border:1.5px solid var(--blush);}
+.config-btn-import:active{background:var(--blush);}
+body.dark .config-input{background:#342540;}
+body.dark .config-input:focus{background:#3e2e4a;}
+body.dark .config-btn-import{background:#342540;border-color:#4a3050;color:var(--text);}
+.config-info{font-size:11px;color:var(--taupe);line-height:1.6;margin-top:8px;}
+.config-info strong{color:var(--bark);}
 </style>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
 </head>
 <body>
 <div class="app">
 
 <!-- HERO -->
 <div class="hero" id="heroEl">
+  <button class="dark-toggle" id="darkToggleBtn" onclick="toggleDark()" title="Alternar modo escuro">🌙</button>
   <div class="hero-content">
-    <div class="hero-tag">🌲 Serra Gaúcha · RS</div>
-    <div class="hero-title"><em>Gramado</em></div>
+    <div class="hero-tag" id="heroTag">Serra Gaúcha · RS</div>
+    <div class="hero-title"><em id="heroTitle">Gramado</em></div>
     <div class="hero-dates">
       <div class="hero-date-chip">
         <span class="lbl">Chegada</span>
@@ -391,6 +483,7 @@ textarea.note-input:focus{border-color:var(--rose);}
   <button class="pill" onclick="switchTab('mala',this)">👜 Mala</button>
   <button class="pill" onclick="switchTab('orcamento',this)">💳 Orçamento</button>
   <button class="pill" onclick="switchTab('notas',this)">📒 Notas</button>
+  <button class="pill" onclick="switchTab('config',this)">⚙️ Config</button>
 </div>
 
 <!-- ===== ROTEIRO ===== -->
@@ -491,6 +584,41 @@ textarea.note-input:focus{border-color:var(--rose);}
   <div style="height:20px"></div>
 </div>
 
+
+<!-- ===== CONFIGURAÇÕES ===== -->
+<div id="tab-config" class="tab-content">
+  <div class="sec-head"><div class="sec-title">⚙️ <em>Configurações</em></div></div>
+
+  <!-- Viagem -->
+  <div class="config-section">
+    <div class="config-card">
+      <div class="config-card-title">✦ Sua Viagem</div>
+      <div class="config-row">
+        <div class="config-label">Nome da viagem</div>
+        <input class="config-input" id="cfgTripName" placeholder="ex: Gramado" oninput="updateTripMeta()">
+      </div>
+      <div class="config-row">
+        <div class="config-label">Destino / Local</div>
+        <input class="config-input" id="cfgTripLocation" placeholder="ex: Serra Gaúcha · RS" oninput="updateTripMeta()">
+      </div>
+    </div>
+
+    <!-- Export / Import -->
+    <div class="config-card">
+      <div class="config-card-title">📋 Backup do Itinerário</div>
+      <p class="config-info">Exporte todos os dados da sua viagem para um arquivo Excel (.xlsx). Use o mesmo arquivo para importar e restaurar seu roteiro em qualquer dispositivo.</p>
+      <div class="config-divider"></div>
+      <div class="config-btn-row">
+        <button class="config-btn config-btn-export" onclick="exportXLSX()">⬇ Exportar Excel</button>
+        <button class="config-btn config-btn-import" onclick="document.getElementById('importFileInput').click()">⬆ Importar Excel</button>
+      </div>
+      <input type="file" id="importFileInput" accept=".xlsx" style="display:none" onchange="importXLSX(this)">
+      <p class="config-info" style="margin-top:10px">⚠️ A importação <strong>substitui</strong> o itinerário atual. Exporte antes se quiser manter o conteúdo.</p>
+    </div>
+  </div>
+  <div style="height:20px"></div>
+</div>
+
 </div><!-- end app -->
 
 <!-- ADD/EDIT MODAL -->
@@ -524,6 +652,7 @@ textarea.note-input:focus{border-color:var(--rose);}
           <option value="compras">🛍 Compras</option>
           <option value="cultura">🎭 Cultura</option>
           <option value="hotel">🏨 Hotel/Serviço</option>
+          <option value="deslocamento">🚗 Deslocamento</option>
           <option value="outro">✏️ Digitar...</option>
         </select>
         <div class="cat-manual-wrap" id="catManualWrap">
@@ -591,6 +720,9 @@ textarea.note-input:focus{border-color:var(--rose);}
   <button class="nav-item" id="bnav-notas" onclick="switchTab('notas',this)">
     <span class="nav-icon">📒</span><span class="nav-label">Notas</span><div class="nav-dot"></div>
   </button>
+  <button class="nav-item" id="bnav-config" onclick="switchTab('config',this)">
+    <span class="nav-icon">⚙️</span><span class="nav-label">Config</span><div class="nav-dot"></div>
+  </button>
 </nav>
 
 <script>
@@ -602,31 +734,86 @@ let discoverFilter = 'todos';
 let weatherText = '❄ ~10°C';
 let currentMalaTab = 0;
 let layoutMode = 'kanban';
+let showPendingOnly = false;
+let tripName = 'Gramado';
+let tripLocation = 'Serra Gaúcha · RS';
 
 // ===== DISCOVER DATA (expanded) =====
 const discoverItems = [
-  { id:'parque-caracol', name:'Parque do Caracol', cat:'natureza', emoji:'🌊', price:65, desc:'Cachoeira de 131m + teleférico com vista deslumbrante da serra', tags:['3h','Agasalho!','Cachoeira'] },
-  { id:'snowland', name:'Snowland', cat:'aventura', emoji:'❄️', price:220, desc:'Parque indoor de neve real — temperatura chega a -5°C. Patinação e esportes radicais', tags:['4h','Indoor','Neve real'] },
-  { id:'mini-mundo', name:'Mini Mundo', cat:'cultura', emoji:'🎠', price:70, desc:'Parque temático com miniaturas perfeitas de monumentos do mundo inteiro', tags:['2h','Família','Fotogênico'] },
-  { id:'alpen-park', name:'Alpen Park', cat:'aventura', emoji:'🎢', price:110, desc:'Tirolesa, montanha-russa alpina e atrações radicais na encosta da serra', tags:['3h','Aventura'] },
-  { id:'lago-negro', name:'Lago Negro', cat:'natureza', emoji:'🏞️', price:0, desc:'Pedalinho, fotos e pôr do sol cor-de-rosa. Um dos locais mais fotogênicos de Gramado', tags:['Gratuito','Fotogênico','Pôr do sol'] },
-  { id:'lumni', name:'Lumni Parque de Luzes', cat:'noturno', emoji:'✨', price:80, desc:'Parque noturno com mais de 500 mil LEDs. Jardins e túneis de luz imersivos', tags:['Noturno','Romântico','Novo!'] },
-  { id:'rua-coberta', name:'Rua Coberta', cat:'compras', emoji:'🛍️', price:0, desc:'Rua mais charmosa de Gramado — lojas, artesanato, cafés e chocolates artesanais', tags:['Gratuito','Centro','Compras'] },
-  { id:'fondue', name:'Fondue (Cantina Piero)', cat:'gastronomia', emoji:'🫕', price:120, desc:'Fondue de queijo e chocolate — experiência obrigatória no frio serrano. Reserve!', tags:['Reserve!','Romântico','Noturno'] },
-  { id:'cafe-colonial', name:'Café Colonial Le Manjue', cat:'gastronomia', emoji:'☕', price:80, desc:'Pães artesanais, embutidos, geleias e muito charme em ambiente aconchegante', tags:['Manhã','Colonial','★ 4.7'] },
-  { id:'acquamotion', name:'Acquamotion', cat:'aventura', emoji:'🌊', price:130, desc:'Parque aquático coberto com águas termais — funciona o ano todo mesmo no frio!', tags:['Thermal','Família','3h'] },
-  { id:'mundo-vapor', name:'Mundo a Vapor', cat:'cultura', emoji:'🚂', price:55, desc:'Museu extraordinário de ciências com miniaturas a vapor em funcionamento', tags:['Cultura','Educativo','1.5h'] },
-  { id:'rua-torta', name:'Rua Torta', cat:'natureza', emoji:'🌸', price:0, desc:'Inspirada na Lombard St de SF — sinuosa, florida e instagramável', tags:['Gratuito','Fotos','Centro'] },
-  { id:'lugano-prawer', name:'Lugano & Prawer', cat:'compras', emoji:'🍫', price:0, desc:'As melhores chocolaterias de Gramado — provar tudo e comprar presentes!', tags:['Gratuito','Chocolates','Presentes'] },
-  { id:'gramado-zoo', name:'GramadoZoo', cat:'natureza', emoji:'🦁', price:70, desc:'Zoo moderno focado em bem-estar animal, pesquisa e educação ambiental', tags:['Família','3h','Natureza'] },
-  { id:'skyglass', name:'Skyglass Canela', cat:'aventura', emoji:'🔭', price:90, desc:'Mirante de vidro sobre o abismo em Canela — vista de tirar o fôlego', tags:['Canela','Radical','Vistas'] },
-  { id:'olivas', name:'Olivas de Gramado', cat:'natureza', emoji:'🫒', price:50, desc:'Fazendinha, animais, trilhas e degustação de azeite com vista linda da serra', tags:['Família','Azeite','Animais'] },
-  { id:'dreamland', name:'Dreamland Museu de Cera', cat:'cultura', emoji:'🎭', price:60, desc:'Museu interativo e temático com figuras de cera de celebridades mundiais', tags:['Família','Diversão','2h'] },
-  { id:'chocofest', name:'Chocolaterie Artesanal', cat:'gastronomia', emoji:'🍫', price:30, desc:'Tour em fábrica artesanal com degustação e compra de chocolates exclusivos', tags:['Degustação','Presente','1h'] },
-  { id:'pousada-saint', name:'Pousada Saint Moritz', cat:'hotel', emoji:'🏡', price:0, desc:'Charmosa pousada inspirada nos Alpes Suíços com café da manhã incluso', tags:['5 estrelas','Café incluso','Centro'] },
-  { id:'hotel-ritta', name:'Hotel Ritta Höppner', cat:'hotel', emoji:'🏨', price:0, desc:'Hotel clássico de Gramado com decoração europeia e localização privilegiada', tags:['Clássico','Central','★ 4.5'] },
-  { id:'vinhedos', name:'Vale dos Vinhedos (Bento)', cat:'natureza', emoji:'🍷', price:0, desc:'A 40min, os melhores vinhos do Sul em meio a paisagens deslumbrantes', tags:['Excursão','Vinhos','Vale'] },
-  { id:'bar-antares', name:'Bar Antares', cat:'noturno', emoji:'🍸', price:0, desc:'Bar descolado com drinks autorais e vista privilegiada do centro de Gramado', tags:['Drinks','Noturno','Vista'] },
+  // ── NATUREZA ──
+  { id:'parque-caracol', name:'Parque do Caracol', cat:'natureza', emoji:'🌊', price:65, desc:'Cachoeira de 131m + teleférico com vista deslumbrante da serra. Uma das atrações mais icônicas da Serra Gaúcha.', tags:['3h','Agasalho!','Cachoeira','Canela'] },
+  { id:'lago-negro', name:'Lago Negro', cat:'natureza', emoji:'🏞️', price:0, desc:'Pedalinho, fotos e pôr do sol cor-de-rosa. Rodeado por pinheiros importados da Alemanha — um dos cenários mais românticos de Gramado.', tags:['Gratuito','Fotogênico','Pôr do sol','Pedalinho'] },
+  { id:'rua-torta', name:'Rua Torta', cat:'natureza', emoji:'🌸', price:0, desc:'A "Lombard Street" gaúcha — rua sinuosa, florida e instagramável no coração de Gramado. Muito bonita na primavera.', tags:['Gratuito','Fotos','Centro'] },
+  { id:'olivas', name:'Olivas de Gramado', cat:'natureza', emoji:'🫒', price:50, desc:'Fazendinha com mini animais, trilhas, orchard e degustação de azeite artesanal com vista linda da serra.', tags:['Família','Azeite','Animais','Rural'] },
+  { id:'gramado-zoo', name:'GramadoZoo', cat:'natureza', emoji:'🦁', price:70, desc:'Zoo moderno focado em bem-estar animal, pesquisa e educação ambiental com animais da fauna brasileira em habitat natural.', tags:['Família','3h','Natureza','Educativo'] },
+  { id:'le-jardin', name:'Le Jardin Parque de Lavandas', cat:'natureza', emoji:'💜', price:0, desc:'Campo de lavanda encantador com loja de produtos artesanais feitos à base da planta. Fotogênico em qualquer época.', tags:['Gratuito','Fotogênico','Lavanda','Loja'] },
+  { id:'lago-joaquina', name:'Lago Joaquina Rita Bier', cat:'natureza', emoji:'🌅', price:0, desc:'Lago urbano charmoso cercado de jardins no centro de Gramado. Perfeito para caminhadas ao entardecer.', tags:['Gratuito','Centro','Caminhada','Pôr do sol'] },
+  { id:'vinhedos', name:'Vale dos Vinhedos (Bento)', cat:'natureza', emoji:'🍷', price:0, desc:'A 40min de Gramado — os melhores vinhos do Sul em meio a paisagens de tirar o fôlego. Degustação nas vinícolas.', tags:['Excursão','Vinhos','Vale','Bento Gonçalves'] },
+  { id:'canion-itaimbezinho', name:'Cânion Itaimbezinho', cat:'natureza', emoji:'🏔️', price:30, desc:'Um dos cânions mais espetaculares do Brasil em Aparados da Serra — paredes de 900m de altura, trilhas e visual surreal.', tags:['Excursão','Trilha','Cânion','Dia inteiro'] },
+  { id:'bondinhos-aereos', name:'Bondinhos Aéreos', cat:'natureza', emoji:'🚡', price:85, desc:'Teleférico sobre o Parque do Caracol com vista panorâmica da Serra — une a cidade de Canela ao parque.', tags:['Canela','Vista','Teleférico','2h'] },
+  { id:'praca-etnias', name:'Praça das Etnias', cat:'natureza', emoji:'🏡', price:0, desc:'Casas típicas dos imigrantes alemães, italianos e portugueses com feirinha de cucas, pães e geleias caseiras.', tags:['Gratuito','Centro','Colonial','Feirinha'] },
+  { id:'vinícola-jolimont', name:'Vinícola Jolimont', cat:'natureza', emoji:'🍇', price:60, desc:'Entre Gramado e Canela, enoturismo com vista panorâmica, degustação e visita guiada em propriedade familiar.', tags:['Vinhos','Degustação','Vista','Casal'] },
+  { id:'casa-seganfredo', name:'Casa Seganfredo', cat:'natureza', emoji:'🫗', price:50, desc:'Boutique de vinhos e espumantes a 8km do centro — pequena produção artesanal com qualidade premiada e tour pela adega.', tags:['Vinhos','Artesanal','Degustação','Pequena'] },
+
+  // ── AVENTURA ──
+  { id:'snowland', name:'Snowland', cat:'aventura', emoji:'❄️', price:220, desc:'1º parque de neve indoor da América Latina — neve real, esqui, snowboard, patinação e montanha de 15m a -5°C.', tags:['4h','Indoor','Neve real','Família'] },
+  { id:'alpen-park', name:'Alpen Park', cat:'aventura', emoji:'🎢', price:110, desc:'Tirolesa, montanha-russa alpina e atrações radicais na encosta da serra — emoção garantida para toda a família.', tags:['3h','Aventura','Radical','Família'] },
+  { id:'skyglass', name:'Skyglass Canela', cat:'aventura', emoji:'🔭', price:90, desc:'Mirante de vidro transparente sobre o abismo em Canela — vertigem garantida e vista de 360° da Serra.', tags:['Canela','Radical','Vertigem','Vistas'] },
+  { id:'acquamotion', name:'Acquamotion', cat:'aventura', emoji:'🏊', price:130, desc:'1º parque aquático termal indoor da América do Sul — 7 piscinas, toboáguas, ondas e borda infinita. Funciona no frio!', tags:['Termal','Família','3h','Indoor'] },
+  { id:'terra-magica', name:'Terra Mágica Florybal', cat:'aventura', emoji:'🎡', price:90, desc:'Parque com atrações para toda a família: roda gigante, carrossel, trem, e a famosa mina de chocolate com cascata.', tags:['Família','Criança','Mina de chocolate','Canela'] },
+  { id:'vale-dinossauros', name:'Vale dos Dinossauros', cat:'aventura', emoji:'🦕', price:60, desc:'Trilhas com dinossauros em tamanho real que se movem e emitem sons — diversão e educação para crianças.', tags:['Família','Criança','Educativo','Trilha'] },
+  { id:'mundo-gelado', name:'Mundo Gelado', cat:'aventura', emoji:'🧊', price:80, desc:'Iglu a -25°C com esculturas de gelo impressionantes. À noite vira ice bar com 2 drinks incluídos. 30 min de pura adrenalina.', tags:['Radical','Noturno','Ice Bar','Fotos'] },
+  { id:'chocobus', name:'ChocoBus — Mundo do Chocolate', cat:'aventura', emoji:'🍫', price:75, desc:'Passeio de ônibus temático pelo universo do chocolate — tour imersivo e interativo pela história do doce mais amado.', tags:['Família','Criança','Chocolate','Tour'] },
+  { id:'bustour', name:'BusTour — Ônibus Panorâmico', cat:'aventura', emoji:'🚌', price:65, desc:'Ônibus turístico de dois andares percorrendo Gramado e Canela — forma rápida e divertida de conhecer as principais atrações.', tags:['Turístico','Panorâmico','Canela','2h'] },
+
+  // ── CULTURA ──
+  { id:'mini-mundo', name:'Mini Mundo', cat:'cultura', emoji:'🎠', price:70, desc:'Parque ao ar livre com réplicas em escala 1/24 de monumentos famosos do mundo — detalhes incríveis que encantam adultos.', tags:['2h','Família','Fotogênico','Ao ar livre'] },
+  { id:'mundo-vapor', name:'Mundo a Vapor', cat:'cultura', emoji:'🚂', price:55, desc:'Museu extraordinário de ciências com miniaturas a vapor em funcionamento — linha férrea de 1920, siderúrgica, olaria e mais.', tags:['Cultura','Educativo','1.5h','Museu'] },
+  { id:'dreamland', name:'Dreamland Museu de Cera', cat:'cultura', emoji:'🎭', price:60, desc:'Museu interativo com figuras de cera de celebridades mundiais + experiências de realidade aumentada.', tags:['Família','Diversão','2h','Museu'] },
+  { id:'reino-chocolate', name:'Reino do Chocolate', cat:'cultura', emoji:'🍫', price:55, desc:'Museu interativo que conta a história do chocolate com degustações deliciosas — obrigatório para chocólatras.', tags:['Chocolate','Museu','Degustação','Família'] },
+  { id:'hollywood-dream-cars', name:'Hollywood Dream Cars', cat:'cultura', emoji:'🚗', price:60, desc:'Coleção de automóveis raros dos anos 20 ao 60 — Cadillacs, Rolls Royces e clássicos americanos em exposição.', tags:['Carros','Nostalgia','Museu','Cultura'] },
+  { id:'harley-motor', name:'Harley Motor Show', cat:'cultura', emoji:'🏍️', price:60, desc:'Museu e bar temático com 30 motos raras Harley-Davidson em cenografia que remete aos cassinos de Las Vegas.', tags:['Motos','Bar','Cultura','Noturno'] },
+  { id:'museu-moda', name:'Museu da Moda', cat:'cultura', emoji:'👗', price:40, desc:'Acervo com peças de moda ao longo da história — trajes, acessórios e exposições sobre tendências do século XX.', tags:['Moda','Cultura','Museu','1h'] },
+  { id:'vila-monica', name:'Vila da Mônica', cat:'cultura', emoji:'🦷', price:100, desc:'Parque temático da Turma da Mônica com mais de 30 atrações — casas dos personagens, cenários lúdicos e shows.', tags:['Família','Criança','Personagens','Parque'] },
+  { id:'espaco-cinema', name:'Palácio dos Festivais', cat:'cultura', emoji:'🎬', price:0, desc:'Sede do famoso Festival de Cinema de Gramado — fachada icônica, calçada da fama e galeria de fotos dos festivais.', tags:['Gratuito','Cinema','Centro','Fotos'] },
+  { id:'igreja-sao-pedro', name:'Igreja São Pedro Apóstolo', cat:'cultura', emoji:'⛪', price:0, desc:'Cartão postal de Gramado — construída em pedra basáltica, com belos jardins e estátuas dos apóstolos no pátio.', tags:['Gratuito','Religioso','Centro','Arquitetura'] },
+  { id:'american-old-trucks', name:'American Old Trucks', cat:'cultura', emoji:'🚛', price:45, desc:'Museu de caminhões antigos americanos dos anos 30 a 70 — peças raras e impecavelmente restauradas.', tags:['Museu','Caminhões','Nostalgia','1h'] },
+  { id:'nba-park', name:'NBA Park', cat:'cultura', emoji:'🏀', price:50, desc:'Atração temática com experiências interativas do basquete americano — simuladores, troféus e muita história da NBA.', tags:['Esporte','NBA','Interativo','Família'] },
+  { id:'oficina-diversao', name:'Oficina da Diversão', cat:'cultura', emoji:'🎪', price:70, desc:'Complexo de atrações sensoriais e interativas indoor — experiências imersivas para crianças e adultos.', tags:['Indoor','Família','Interativo','Criança'] },
+
+  // ── GASTRONOMIA ──
+  { id:'fondue', name:'Fondue (Cantina Piero)', cat:'gastronomia', emoji:'🫕', price:120, desc:'Fondue de queijo e chocolate — experiência obrigatória no frio serrano. Reserve com antecedência!', tags:['Reserve!','Romântico','Noturno','Inverno'] },
+  { id:'cafe-colonial', name:'Café Colonial Le Manjue', cat:'gastronomia', emoji:'☕', price:80, desc:'Pães artesanais, embutidos, queijos, geleias e muito charme em ambiente aconchegante. O melhor café colonial da região.', tags:['Manhã','Colonial','Artesanal','★ 4.7'] },
+  { id:'chocofest', name:'Prawer — Fábrica de Chocolate', cat:'gastronomia', emoji:'🍫', price:30, desc:'Tour pela fábrica de chocolates mais famosa de Gramado — degustação gratuita e compra de presentes irresistíveis.', tags:['Gratuito','Chocolates','Degustação','Presentes'] },
+  { id:'noite-gaucha', name:'Noite Gaúcha', cat:'gastronomia', emoji:'🥩', price:150, desc:'Jantar típico gaúcho com churrasco, músicas e danças tradicionais — experiência cultural completa com muito sabor.', tags:['Jantar','Cultural','Típico','Show'] },
+  { id:'noite-italiana', name:'Noite Italiana', cat:'gastronomia', emoji:'🍝', price:130, desc:'Jantar temático com macarrão artesanal, vinhos regionais e cantores de ópera italiana ao vivo. Reserve!', tags:['Jantar','Reserve!','Italiano','Show'] },
+  { id:'hard-rock', name:'Hard Rock Cafe Gramado', cat:'gastronomia', emoji:'🎸', price:90, desc:'Clássico Hard Rock com show todas as noites, cardápio americano e a atmosfera única da rede mundial.', tags:['Noturno','Show','Internacional','Animado'] },
+  { id:'praça-moinho', name:'Praça do Moinho', cat:'gastronomia', emoji:'🌾', price:0, desc:'Charmosa praça com moinho de vento decorativo no centro — rodeada de cafés e lojas de produtos coloniais.', tags:['Gratuito','Centro','Fotos','Colonial'] },
+  { id:'cafe-coliseu', name:'Café Coliseu', cat:'gastronomia', emoji:'☕', price:45, desc:'Café clássico de Gramado com ambiente aconchegante — cucas caseiras, strudel e chocolate quente incomparáveis.', tags:['Café','Manhã','Centro','Cucas'] },
+  { id:'restaurante-gasthof', name:'Gasthof (Culinária Alemã)', cat:'gastronomia', emoji:'🥨', price:80, desc:'Culinária alemã autêntica com eisbein, chucrute e chopp artesanal em ambiente típico de Gramado.', tags:['Alemão','Almoço','Típico','Chopp'] },
+  { id:'maria-fumaça', name:'Maria Fumaça Bento Gonçalves', cat:'gastronomia', emoji:'🚂', price:200, desc:'Roteiro famoso a 40min — trem histórico pelos vinhedos com degustação de vinhos, queijos e embutidos regionais.', tags:['Excursão','Vinhos','Trem','Dia inteiro'] },
+
+  // ── COMPRAS ──
+  { id:'rua-coberta', name:'Rua Coberta', cat:'compras', emoji:'🛍️', price:0, desc:'A rua mais charmosa de Gramado com teto translúcido — lojas, artesanato, cafés e chocolates artesanais no centro.', tags:['Gratuito','Centro','Compras','Artesanato'] },
+  { id:'lugano-prawer', name:'Chocolaterias Lugano & Prawer', cat:'compras', emoji:'🍫', price:0, desc:'As duas chocolaterias mais famosas de Gramado — experimentar tudo e comprar presentes que vão fazer sucesso!', tags:['Gratuito','Chocolates','Presentes','Centro'] },
+  { id:'caminho-estrelas', name:'Caminho das Estrelas', cat:'compras', emoji:'⭐', price:0, desc:'Calçada da fama do Festival de Cinema com estrelas dos atores famosos — boa para fotos e lojas ao redor.', tags:['Gratuito','Centro','Fotos','Cultura'] },
+  { id:'loja-lavanda', name:'Lojas de Produtos de Lavanda', cat:'compras', emoji:'💜', price:0, desc:'Produtos artesanais de lavanda: sabonetes, sachês, perfumes e mel — ótimas lembranças do campo de lavanda.', tags:['Gratuito','Presentes','Artesanal','Lavanda'] },
+  { id:'feirinha-colonial', name:'Feirinha de Produtos Coloniais', cat:'compras', emoji:'🧀', price:0, desc:'Cucas fresquinhas, geleias artesanais, queijos, mel e embutidos direto dos produtores — Praça das Etnias.', tags:['Gratuito','Colonial','Produtores','Presentes'] },
+  { id:'centro-compras', name:'Lojas do Centro — Av. Borges', cat:'compras', emoji:'🏪', price:0, desc:'A principal avenida comercial de Gramado — roupas, artesanato, suvenires e lojas de grife local.', tags:['Gratuito','Centro','Roupas','Suvenires'] },
+
+  // ── NOTURNO ──
+  { id:'lumni', name:'Lumni Parque de Luzes', cat:'noturno', emoji:'✨', price:80, desc:'Parque noturno com mais de 500 mil LEDs — jardins e túneis de luz imersivos para um passeio mágico a dois.', tags:['Noturno','Romântico','Novo!','LEDs'] },
+  { id:'bar-antares', name:'Bar Antares', cat:'noturno', emoji:'🍸', price:0, desc:'Bar descolado com drinks autorais e vista privilegiada do centro de Gramado. Ambiente animado e descontraído.', tags:['Drinks','Noturno','Vista','Descolado'] },
+  { id:'mundo-gelado-noite', name:'Mundo Gelado Ice Bar', cat:'noturno', emoji:'🧊', price:80, desc:'À noite o iglu de -25°C vira ice bar com mobília de gelo e 2 drinks incluídos — experiência única e gelada!', tags:['Ice Bar','Radical','2 drinks','Noturno'] },
+  { id:'harley-bar', name:'Harley Motor Show Bar', cat:'noturno', emoji:'🏍️', price:60, desc:'Bar temático com ambiente de Las Vegas e motos raras Harley — boa pedida para uma noite animada e diferente.', tags:['Bar','Noturno','Temático','Animado'] },
+  { id:'espetaculo-nativitaten', name:'Nativitaten (Espetáculo)', cat:'noturno', emoji:'🎶', price:115, desc:'Musical grandioso com encenações, luz e música que conta a história de Gramado e da serra — muito emocionante.', tags:['Show','Musical','Noturno','Emocionante'] },
+
+  // ── HOTEL ──
+  { id:'pousada-saint', name:'Pousada Saint Moritz', cat:'hotel', emoji:'🏡', price:0, desc:'Charmosa pousada inspirada nos Alpes Suíços com café da manhã completo e localização central.', tags:['5 estrelas','Café incluso','Centro','Alpino'] },
+  { id:'hotel-ritta', name:'Hotel Ritta Höppner', cat:'hotel', emoji:'🏨', price:0, desc:'Hotel clássico de Gramado com decoração europeia e localização privilegiada — referência na cidade há décadas.', tags:['Clássico','Central','Europeu','★ 4.5'] },
+  { id:'wish-serrano', name:'Wish Serrano Resort', cat:'hotel', emoji:'🏰', price:0, desc:'Resort luxuoso com spa, piscina aquecida, restaurante gourmet e localização estratégica perto das atrações.', tags:['Resort','Luxo','Spa','Piscina aquecida'] },
+  { id:'pousada-araucarias', name:'Pousada das Araucárias (Canela)', cat:'hotel', emoji:'🌲', price:0, desc:'Ótimo custo-benefício em Canela, quase ao lado da Catedral de Pedra — nota 9,7 pelos hóspedes.', tags:['Canela','★ 9.7','Custo-benefício','Central'] },
+  { id:'hotel-coline', name:'Hotel Coline de France', cat:'hotel', emoji:'🇫🇷', price:0, desc:'O hotel mais bem avaliado de Gramado — nota 9,9. Luxo no bairro Dutra, ambiente íntimo e requintado.', tags:['★ 9.9','Luxo','Bairro Dutra','Exclusivo'] },
 ];
 
 // ===== MALA DATA =====
@@ -859,7 +1046,24 @@ function toggleLayout() {
   renderDayPanels();
 }
 
+
+function togglePending() {
+  showPendingOnly = !showPendingOnly;
+  renderDayPanels();
+  selectDay(currentDay);
+}
+
 function renderDayPanels() {
+  // Sort activities by time (activities without time go to end)
+  days.forEach(day => {
+    if (!day.activities) return;
+    day.activities.sort((a, b) => {
+      if (!a.time && !b.time) return 0;
+      if (!a.time) return 1;
+      if (!b.time) return -1;
+      return a.time.localeCompare(b.time);
+    });
+  });
   const container = document.getElementById('dayPanelsContainer');
   container.innerHTML = '';
   days.forEach((day, idx) => {
@@ -875,6 +1079,7 @@ function renderDayPanels() {
       <span class="kanban-date-label">${formatDateFull(d)} · ${getDayOfWeek(d)}</span>
       <div class="kanban-header-right">
         <span class="kanban-count">${day.activities.length} atividade${day.activities.length !== 1 ? 's' : ''}</span>
+        <button class="pending-toggle ${showPendingOnly?'active':''}" onclick="togglePending()" title="Somente pendentes"></button>
         <div class="layout-toggle">
           <button class="layout-btn layout-btn-kanban ${isKanban?'active':''}" onclick="toggleLayout()" title="Cards">⊞</button>
           <button class="layout-btn layout-btn-list ${!isKanban?'active':''}" onclick="toggleLayout()" title="Lista">☰</button>
@@ -891,7 +1096,12 @@ function renderDayPanels() {
       if (day.activities.length === 0) {
         scroll.innerHTML = `<div class="empty-day" style="min-width:220px"><div class="empty-icon">🌿</div><p>Nenhuma atividade ainda.<br>Adicione do Descobrir!</p></div>`;
       } else {
-        day.activities.forEach((act, aIdx) => scroll.appendChild(buildActCard(act, idx, aIdx)));
+        const kActs = showPendingOnly ? day.activities.filter(a => !a.done) : day.activities;
+        if (kActs.length === 0 && showPendingOnly) {
+          scroll.innerHTML = '<div class="empty-day" style="min-width:220px"><div class="empty-icon">✨</div><p>Tudo concluído neste dia!</p></div>';
+        } else {
+          kActs.forEach((act, aIdx) => scroll.appendChild(buildActCard(act, idx, day.activities.indexOf(act))));
+        }
       }
       const addCard = document.createElement('div');
       addCard.className = 'add-act-card';
@@ -907,7 +1117,12 @@ function renderDayPanels() {
       if (day.activities.length === 0) {
         listWrap.innerHTML = `<div class="empty-day"><div class="empty-icon">🌿</div><p>Nenhuma atividade ainda.<br>Adicione do Descobrir ou crie a sua!</p></div>`;
       } else {
-        day.activities.forEach((act, aIdx) => listWrap.appendChild(buildActCard(act, idx, aIdx)));
+        const lActs = showPendingOnly ? day.activities.filter(a => !a.done) : day.activities;
+        if (lActs.length === 0 && showPendingOnly) {
+          listWrap.innerHTML = '<div class="empty-day"><div class="empty-icon">✨</div><p>Tudo concluído neste dia!</p></div>';
+        } else {
+          lActs.forEach((act) => listWrap.appendChild(buildActCard(act, idx, day.activities.indexOf(act))));
+        }
       }
       const addCard = document.createElement('div');
       addCard.className = 'add-act-card';
@@ -939,7 +1154,7 @@ function initDragScroll(el) {
 
 function buildActCard(act, dayIdx, aIdx) {
   const card = document.createElement('div');
-  card.className = `act-card cat-${act.cat}`;
+  card.className = `act-card cat-${act.cat}${act.done ? ' done' : ''}`;
   const timeLabel = act.time ? `<div class="act-time-badge">🕐 ${act.time}</div>` : `<div class="act-time-badge empty">sem horário</div>`;
   card.innerHTML = `
     <div class="act-card-top">
@@ -963,7 +1178,15 @@ function buildActCard(act, dayIdx, aIdx) {
   `;
   card.querySelector('.act-check-sm').addEventListener('click', (e) => {
     e.stopPropagation();
-    card.classList.toggle('done');
+    const nowDone = !act.done;
+    act.done = nowDone;
+    card.classList.toggle('done', nowDone);
+    if (showPendingOnly && nowDone) {
+      // remove card from view with fade
+      card.style.transition = 'opacity 0.3s';
+      card.style.opacity = '0';
+      setTimeout(() => { renderDayPanels(); selectDay(currentDay); }, 320);
+    }
     updateProgress();
     saveState();
   });
@@ -1284,6 +1507,7 @@ function switchTab(name, btn) {
   if (name === 'descobrir') renderDiscover();
   if (name === 'orcamento') renderBudget();
   if (name === 'mala') renderMala();
+  if (name === 'config') applyTripMeta();
 }
 
 // ===== NOTES =====
@@ -1322,6 +1546,8 @@ function saveState() {
     weatherText,
     malaChecked,
     layoutMode,
+    tripName,
+    tripLocation,
     dateStart: document.getElementById('dateStart').value,
     dateEnd: document.getElementById('dateEnd').value,
   };
@@ -1340,13 +1566,222 @@ function loadState() {
     if (state.weatherText) { weatherText = state.weatherText; document.getElementById('weatherText').textContent = weatherText; }
     if (state.malaChecked) malaChecked = state.malaChecked;
     if (state.layoutMode) layoutMode = state.layoutMode;
+    if (state.tripName) { tripName = state.tripName; }
+    if (state.tripLocation) { tripLocation = state.tripLocation; }
     return true;
   } catch(e) { return false; }
 }
 
+
+
+// ===== TRIP META =====
+function updateTripMeta() {
+  const name = document.getElementById('cfgTripName').value.trim();
+  const loc  = document.getElementById('cfgTripLocation').value.trim();
+  if (name) { tripName = name; document.getElementById('heroTitle').textContent = tripName; }
+  if (loc)  { tripLocation = loc; document.getElementById('heroTag').textContent = tripLocation; }
+  saveState();
+}
+
+function applyTripMeta() {
+  document.getElementById('heroTitle').textContent = tripName;
+  document.getElementById('heroTag').textContent   = tripLocation;
+  const ni = document.getElementById('cfgTripName');
+  const li = document.getElementById('cfgTripLocation');
+  if (ni) ni.value = tripName;
+  if (li) li.value = tripLocation;
+}
+
+// ===== EXPORT XLSX =====
+function exportXLSX() {
+  try {
+    if (typeof XLSX === 'undefined') { showToast('⚠️ Carregando biblioteca…'); return; }
+
+    const wb = XLSX.utils.book_new();
+
+    // ── Sheet 1: INFO ──
+    const infoData = [
+      ['Campo', 'Valor'],
+      ['Nome da viagem', tripName],
+      ['Local', tripLocation],
+      ['Data de chegada', document.getElementById('dateStart').value],
+      ['Data de saída',   document.getElementById('dateEnd').value],
+      ['Clima',           weatherText],
+    ];
+    XLSX.utils.book_append_sheet(wb, XLSX.utils.aoa_to_sheet(infoData), 'Info');
+
+    // ── Sheet 2: ITINERÁRIO ──
+    const header = ['Dia', 'Label do dia', 'Data', 'Nome da atividade', 'Horário', 'Categoria', 'Emoji', 'Preço (R$)', 'Descrição', 'Concluída'];
+    const rows = [header];
+    days.forEach((day, di) => {
+      if (!day.activities || day.activities.length === 0) {
+        rows.push([di + 1, day.label || '', day.date || '', '', '', '', '', '', '', '']);
+      } else {
+        day.activities.forEach(a => {
+          rows.push([
+            di + 1,
+            day.label || '',
+            day.date  || '',
+            a.name    || '',
+            a.time    || '',
+            a.cat     || '',
+            a.emoji   || '',
+            a.price   != null ? a.price : '',
+            a.desc    || '',
+            a.done    ? 'Sim' : 'Não',
+          ]);
+        });
+      }
+    });
+    const wsItin = XLSX.utils.aoa_to_sheet(rows);
+    // Column widths
+    wsItin['!cols'] = [6,16,12,28,8,14,6,10,36,8].map(w => ({wch:w}));
+    XLSX.utils.book_append_sheet(wb, wsItin, 'Itinerário');
+
+    // ── Sheet 3: DIAS (labels/datas dos dias) ──
+    const daysHeader = ['Nº', 'Data', 'Label'];
+    const daysRows = [daysHeader, ...days.map((d, i) => [i + 1, d.date || '', d.label || ''])];
+    XLSX.utils.book_append_sheet(wb, XLSX.utils.aoa_to_sheet(daysRows), 'Dias');
+
+    const filename = (tripName || 'viagem').replace(/[^a-z0-9]/gi,'_') + '_roteiro.xlsx';
+    XLSX.writeFile(wb, filename);
+    showToast('✓ Excel exportado!');
+  } catch(err) {
+    console.error('Erro exportar:', err);
+    showToast('Erro ao exportar: ' + err.message);
+  }
+}
+
+// ===== IMPORT XLSX =====
+function importXLSX(input) {
+  const file = input.files[0];
+  if (!file) return;
+  if (typeof XLSX === 'undefined') { showToast('⚠️ Biblioteca não carregada'); return; }
+
+  const reader = new FileReader();
+  reader.onload = function(e) {
+    try {
+      const wb = XLSX.read(e.target.result, { type: 'array' });
+
+      // ── Read INFO ──
+      const infoSheet = wb.Sheets['Info'];
+      if (infoSheet) {
+        const infoRows = XLSX.utils.sheet_to_json(infoSheet, { header: 1 });
+        infoRows.forEach(row => {
+          if (!row[0] || !row[1]) return;
+          const key = String(row[0]).toLowerCase();
+          const val = String(row[1]);
+          if (key.includes('nome'))    { tripName     = val; }
+          if (key.includes('local'))   { tripLocation = val; }
+          if (key.includes('chegada')) { document.getElementById('dateStart').value = val; }
+          if (key.includes('saída') || key.includes('saida')) { document.getElementById('dateEnd').value = val; }
+          if (key.includes('clima'))   { weatherText  = val; document.getElementById('weatherText').textContent = val; }
+        });
+      }
+
+      // ── Read DIAS (labels) — build lookup by day number ──
+      const dayLabels = {};
+      const dayDates  = {};
+      const diasSheet = wb.Sheets['Dias'];
+      if (diasSheet) {
+        const diasRows = XLSX.utils.sheet_to_json(diasSheet, { header: 1 });
+        diasRows.slice(1).forEach(row => {
+          if (row[0] == null) return;
+          const n = parseInt(row[0]);
+          if (!isNaN(n)) {
+            dayDates[n]  = String(row[1] || '');
+            dayLabels[n] = String(row[2] || '');
+          }
+        });
+      }
+
+      // ── Read ITINERÁRIO ──
+      const itinSheet = wb.Sheets['Itinerário'];
+      if (!itinSheet) throw new Error('Aba "Itinerário" não encontrada no arquivo.');
+      const itinRows = XLSX.utils.sheet_to_json(itinSheet, { header: 1 });
+
+      // Detect header row index
+      let headerIdx = 0;
+      for (let i = 0; i < Math.min(itinRows.length, 5); i++) {
+        if (itinRows[i] && String(itinRows[i][0]).toLowerCase().includes('dia')) { headerIdx = i; break; }
+      }
+      const dataRows = itinRows.slice(headerIdx + 1).filter(r => r && r[0] != null && String(r[0]).trim() !== '');
+
+      // Build days array
+      const newDays = {};
+      dataRows.forEach(row => {
+        const dayNum = parseInt(row[0]);
+        if (isNaN(dayNum)) return;
+        if (!newDays[dayNum]) {
+          newDays[dayNum] = {
+            date:       dayDates[dayNum]  || String(row[2] || ''),
+            label:      dayLabels[dayNum] || String(row[1] || ('Dia ' + dayNum)),
+            activities: [],
+          };
+        }
+        const name = String(row[3] || '').trim();
+        if (!name) return; // empty day row
+        newDays[dayNum].activities.push({
+          name:  name,
+          time:  String(row[4] || ''),
+          cat:   String(row[5] || 'outro'),
+          emoji: String(row[6] || '📍'),
+          price: parseFloat(row[7]) || 0,
+          desc:  String(row[8] || ''),
+          done:  String(row[9] || '').toLowerCase() === 'sim',
+        });
+      });
+
+      // Sort by day number and assign
+      days = Object.keys(newDays)
+        .map(Number)
+        .sort((a,b) => a - b)
+        .map(n => newDays[n]);
+
+      // If no days found from Itinerário, try to build from Dias sheet
+      if (days.length === 0 && Object.keys(dayDates).length > 0) {
+        days = Object.keys(dayDates).map(Number).sort((a,b)=>a-b).map(n => ({
+          date: dayDates[n], label: dayLabels[n] || ('Dia ' + n), activities: []
+        }));
+      }
+
+      currentDay = 0;
+      saveState();
+      applyTripMeta();
+      renderDays();
+      renderBudget();
+      selectDay(0);
+      showToast('✓ Itinerário importado!');
+    } catch(err) {
+      console.error('Erro importar:', err);
+      showToast('Erro ao importar: ' + err.message);
+    }
+    input.value = ''; // reset so same file can be re-imported
+  };
+  reader.onerror = function() { showToast('Erro ao ler o arquivo.'); };
+  reader.readAsArrayBuffer(file);
+}
+
+// ===== DARK MODE =====
+let darkMode = false;
+function toggleDark() {
+  darkMode = !darkMode;
+  document.body.classList.toggle('dark', darkMode);
+  document.getElementById('darkToggleBtn').textContent = darkMode ? '☀️' : '🌙';
+  try { localStorage.setItem('gramado_dark', darkMode ? '1' : '0'); } catch(e) {}
+}
+function loadDark() {
+  try {
+    const d = localStorage.getItem('gramado_dark');
+    if (d === '1') { darkMode = true; document.body.classList.add('dark'); document.getElementById('darkToggleBtn').textContent = '☀️'; }
+  } catch(e) {}
+}
+
 // ===== INIT =====
 function init() {
+  loadDark();
   const loaded = loadState();
+  applyTripMeta();
   if (loaded && days.length > 0) {
     renderDays();
     renderBudget();
